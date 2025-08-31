@@ -1,0 +1,76 @@
+/* Card Lesson Styles */
+
+.card-lesson {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-lesson:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.hashtag {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color: rgb(68, 68, 68);
+  font-size: 12px;
+}
+
+.card-lesson:hover .hashtag {
+  background-color: #0764ce !important;
+  color: white !important;
+}
+
+/* Animation Background Styles */
+/* Gradient background */
+.bg-gradient {
+  background: linear-gradient(to bottom right, #fce7f3, #ffffff, #eff6ff);
+}
+
+/* Simple text colors */
+.text-pink { color: #f9a8d4; }
+.bg-pink { background-color: #fbcfe8; }
+.bg-purple { background-color: #e9d5ff; }
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.6; }
+}
+.animate-pulse { animation: pulse 2s infinite; }
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-bounce { animation: bounce 1.5s infinite; }
+
+/* Delays */
+.delay-05s { animation-delay: 0.5s; }
+.delay-1s { animation-delay: 1s; }
+.delay-15s { animation-delay: 1.5s; }
+.delay-22s { animation-delay: 2.2s; }
+
+/* Dotted pattern */
+.dotted-pattern {
+  background-image: radial-gradient(circle at 2px 2px, rgba(236,72,153,0.1) 1px, transparent 0px);
+  background-size: 20px 20px;
+}
+
+/* Radial glow */
+.radial-glow {
+  background: radial-gradient(100px at 522px 213px, rgba(236,72,153,0.05), transparent 80%);
+}
+
+.bg-gradient {
+  background: linear-gradient(to right, #5F2EEA, #8A6AFB);
+}
+
+/*Custome overflow*/
+@media (min-width: 992px) {
+  .overflow-lg-auto {
+    overflow: auto !important;
+  }
+  .max-h-lg-600 {
+    max-height: 600px !important;
+  }
+}
