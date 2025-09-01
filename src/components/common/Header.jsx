@@ -345,22 +345,20 @@ const Header = () => {
                                             <div className="u-text">
                                                 <h4>Hizrian</h4>
                                                 <p className="text-muted">hello@example.com</p>
-                                                <a
-                                                    href="profile.html"
-                                                    className="btn btn-xs btn-secondary btn-sm"
-                                                >View Profile </a>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">My Profile</a>
-                                        <a className="dropdown-item" href="#">My Balance</a>
-                                        <a className="dropdown-item" href="#">Inbox</a>
+                                        <a className="dropdown-item" href="#">Trang cá nhân</a>
                                         <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Account Setting</a>
+                                        <a className="dropdown-item" href="#">Viết Blog</a>
                                         <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Logout</a>
+                                        <a className="dropdown-item" href="#">Bài viết của tôi</a>
+                                        <div className="dropdown-divider"></div>
+                                        <a className="dropdown-item" href="#">Settings</a>
+                                        <div className="dropdown-divider"></div>
+                                        <a className="dropdown-item" href="#">Đăng xuất</a>
                                     </li>
                                 </div>
                             </ul>
