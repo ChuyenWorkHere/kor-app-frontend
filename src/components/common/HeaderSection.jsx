@@ -1,79 +1,121 @@
-import React from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft, FaSearch } from "react-icons/fa";
-import TagList from "./TagList";
+import api from "../../config/axiosConfig";
+
+const levelColor = {
+  1: "#5f2eea",
+  2: "#ff6b6b",
+  3: "#06d6a0"
+}
 
 const HeaderSection = () => {
+
+  const [levels, setLevels] = useState([]);
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  useEffect(() => {
+
+    api.get("/public/levels")
+      .then(response => {
+        const levelsData = response.data.data;
+        setLevels(levelsData);
+
+        if (levelsData.length > 0) {
+          setSelectedLevel(levelsData[0]);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching levels:", error);
+      });
+
+  }, []);
+
   return (
     <div
       className="position-relative overflow-hidden border-bottom"
     >
       <div className="py-3 px-0 position-relative" style={{ zIndex: 10 }}>
-        {/* Back link + Filter + Search */}
-        <Row className="align-items-center mb-3">
-          <Col className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
-              
-              <Form.Select
-                className="px-3 py-2 rounded w-100 w-sm-auto"
-                aria-label="Chọn trình độ"
-              >
-                <option value="all">Tất cả trình độ</option>
-                <option value="beginner">Sơ cấp</option>
-                <option value="intermediate">Trung cấp</option>
-                <option value="advanced">Cao cấp</option>
-              </Form.Select>
+        <div className="row align-items-center mb-3">
+          <div className="col d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
 
-              
-              <Form.Select
-                className="px-3 py-2 rounded w-100 w-sm-auto"
-                aria-label="Chọn trạng thái"
-              >
-                <option value="all">Tất cả trạng thái</option>
-                <option value="not-started">Chưa bắt đầu</option>
-                <option value="in-progress">Đang học</option>
-                <option value="completed">Đã hoàn thành</option>
-              </Form.Select>
+            {/* Select cấp độ */}
+            <select
+              className="form-select px-3 py-2 rounded w-100 w-sm-auto"
+              value={selectedLevel?.levelId || 0}
+              onChange={e =>
+                setSelectedLevel(
+                  levels.find(level => level.levelId === Number(e.target.value))
+                )
+              }
+            >
+              {levels.map(level => (
+                <option key={level.levelId} value={level.levelId}>
+                  {level.levelName}
+                </option>
+              ))}
+            </select>
 
-              {/* Search box */}
-              <div className="w-100 w-sm-auto">
-                <div className="position-relative">
-                  <FaSearch
-                    className="position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"
-                    style={{ fontSize: "14px" }}
-                  />
-                  <Form.Control
-                    type="text"
-                    placeholder="Tìm kiếm..."
-                    className="ps-5 rounded"
-                  />
-                </div>
+            {/* Select trạng thái */}
+            <select
+              className="form-select px-3 py-2 rounded w-100 w-sm-auto"
+              aria-label="Chọn trạng thái"
+            >
+              <option value="all">Tất cả trạng thái</option>
+              <option value="not-started">Chưa bắt đầu</option>
+              <option value="in-progress">Đang học</option>
+              <option value="completed">Đã hoàn thành</option>
+            </select>
+
+            {/* Search box */}
+            <div className="w-100 w-sm-auto">
+              <div className="position-relative">
+                <FaSearch
+                  className="position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"
+                  style={{ fontSize: "14px" }}
+                />
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm..."
+                  className="form-control ps-5 rounded"
+                />
               </div>
-          </Col>
-        </Row>
+            </div>
+
+          </div>
+        </div>
 
         {/* Icon + Title */}
-        <Row className="align-items-center">
-          <Col xs="auto">
+        <div className="row align-items-center">
+          {/* Cột avatar/level icon */}
+          <div className="col-auto">
             <div
               className="d-flex align-items-center justify-content-center rounded-3"
               style={{
                 width: "50px",
                 height: "50px",
-                backgroundColor: "rgb(95, 46, 234)",
-                border: "2px solid rgb(95, 46, 234)"
+                backgroundColor: `${levelColor[selectedLevel?.levelId]}`,
+                border: `2px solid ${levelColor[selectedLevel?.levelId]}`
               }}
             >
-              <img src="/assets/img/beginner-level-img.png" className="h-75" alt="Sơ Cấp" />
+              <img
+                src={`${selectedLevel?.levelImg}`}
+                className="h-75"
+                alt={selectedLevel?.levelName}
+              />
             </div>
-          </Col>
-          <Col>
-            <h1 className="h4 fw-bold text-dark mb-1">Sơ cấp</h1>
+          </div>
+
+          {/* Cột nội dung */}
+          <div className="col">
+            <h1 className="h4 fw-bold text-dark mb-1">
+              {selectedLevel?.levelName}
+            </h1>
             <p className="text-muted small mb-0">
-              Khám phá các chủ đề phù hợp với trình độ của bạn
+              {selectedLevel?.levelDesc}
             </p>
-          </Col>
-        </Row>
+          </div>
+        </div>
+
       </div>
     </div>
   );

@@ -1,14 +1,13 @@
 import React from 'react'
-import { useBreadcrumbContext } from '../../context/BreadcrumbProvider';
 
-const GrammarTheory = () => {
-    const { title } = useBreadcrumbContext();
+const GrammarTheory = ({lessonSlug, theoryId}) => {
+    
 
     return (
         <div
             className="p-3 bg-white rounded shadow-sm text-list-style"
         >
-            <h2 className="fs-4 fw-bold mb-3">{ title }</h2>
+            <h2 className="fs-4 fw-bold mb-3">{ lessonSlug }</h2>
 
             <h3 className="fs-5 fw-semibold">1. Cách dùng</h3>
             <p className="mb-2">

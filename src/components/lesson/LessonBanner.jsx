@@ -1,29 +1,33 @@
 import React from "react";
-import { ProgressBar } from "react-bootstrap";
 import { FaBookOpen, FaCheck, FaCheckCircle, FaInfoCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const LessonBanner = () => {
+const LessonBanner = ({currentLesson}) => {
+
+  const totalCompleted = currentLesson?.contents?.filter(c => c.myProgress.status === "COMPLETED").length;
+
   return (
     <div className="position-relative p-4 border rounded-4 mt-3" style={{ backgroundColor: "#f6f3ff" }}>
       {/* Header */}
-      <div className="d-flex flex-md-row gap-4 gap-md-0 flex-column justify-content-between align-items-center align-items-md-start">
+      <div className="d-flex flex-md-row gap-4 gap-md-0 flex-column justify-content-between align-items-center">
         <div className="pe-3 min-w-0">
           {/* Badges */}
           <div className="d-flex align-items-start mb-3 flex-wrap gap-2">
             <span className="badge m-0 rounded-pill bg-light text-primary shadow-sm d-flex align-items-center py-2 px-3 fs-6">
-              <FaCheckCircle size={16} className='me-1' /> Sơ cấp
+              <FaCheckCircle size={16} className='me-1' /> {currentLesson?.level?.levelName || "Not Found"}
             </span>
             <span className="badge m-0 rounded-pill bg-primary text-white shadow-sm d-flex align-items-center py-2 px-3 fs-6">
-              <FaBookOpen size={16} className='me-1' /> 6 bài tập
+              <FaBookOpen size={16} className='me-1' /> {currentLesson?.contents.length || 0} bài học
             </span>
-            <span className="badge m-0 rounded-pill bg-primary text-white shadow-sm d-flex align-items-center py-2 px-3 fs-6">
-              <FaCheckCircle size={16} className='me-1' /> Hoàn thành
-            </span>
+            {currentLesson?.myProgress?.status === "COMPLETED" && (
+              <span className="badge m-0 rounded-pill bg-primary text-white shadow-sm d-flex align-items-center py-2 px-3 fs-6">
+                <FaCheckCircle size={16} className='me-1' /> Hoàn thành
+              </span>
+            )}
           </div>
 
           {/* Title */}
-          <h1 className="fs-3 fw-bold mb-3 text-primary text-md-start text-center">Chào hỏi và Giới thiệu</h1>
+          <h1 className="fs-3 fw-bold mb-3 text-primary text-md-start text-center">{currentLesson?.lessonTitle || "Not Found"}</h1>
 
           {/* Description */}
           <div className="mb-3">
@@ -32,26 +36,29 @@ const LessonBanner = () => {
                 <FaInfoCircle size={20} className='text-primary' />
               </div>
               <p className="mb-0 text-secondary">
-                <strong>Bài tập Dictation</strong> về Chào hỏi và Giới thiệu
+                {currentLesson?.lessonDesc || "Not Found"}
               </p>
             </div>
           </div>
 
           {/* Tags */}
           <div className="d-flex gap-2 justify-content-md-start justify-content-center">
-            <span className="badge bg-light text-dark m-0">#Giới thiệu</span>
-            <span className="badge bg-light text-dark m-0">#Gặp gỡ</span>
-            <span className="badge bg-light text-dark m-0">#Làm quen</span>
+            {currentLesson?.tags?.map(tag => (
+              <span key={tag.tagId} className="badge bg-light text-dark m-0">#{tag.tagName}</span>
+            ))}
+
           </div>
         </div>
 
-        <div className="d-flex">
+        <div className="d-flex flex-column justify-content-center align-items-center">
           {/* Progress */}
           <div className="text-center px-3">
             <div className="small fw-medium mb-2 text-primary">Tiến độ học tập</div>
-            <div className="fw-bold fs-2 text-primary">100%</div>
-            <ProgressBar now={60} className="my-2" style={{ height: "12px", width: "120px" }} />
-            <span className="small fw-medium text-primary">6/6 bài tập</span>
+            <div className="fw-bold fs-2 text-primary">{currentLesson?.myProgress?.percentage || 0}%</div>
+            <div className="progress" style={{ height: "8px"}}>
+              <div className="progress-bar bg-blue" style={{ width: `${currentLesson?.myProgress?.percentage || 0}%` }}></div>
+            </div>
+            <span className="small fw-medium text-primary">{totalCompleted}/{currentLesson?.contents?.length || 0} bài tập</span>
           </div>
 
           {/* Actions */}

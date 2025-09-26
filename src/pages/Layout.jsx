@@ -5,6 +5,7 @@ import Header from '../components/common/Header';
 import AnimatedBackground from '../components/common/AnimatedBackground';
 import BreadCrumb from '../components/common/BreadCrumb';
 import Footer from '../components/common/Footer';
+import { Toaster } from 'react-hot-toast';
 
 
 const Layout = () => {
@@ -26,6 +27,7 @@ const Layout = () => {
                 </div>
                 <Footer />
             </div>
+            <Toaster />
         </>
     )
 }

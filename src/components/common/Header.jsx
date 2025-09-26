@@ -1,21 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaAngleRight, FaBell, FaEnvelope, FaHeart, FaLayerGroup, FaSearch } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { logout } from '../../features/authSlice'
+import { fetchUserInfo } from '../../features/userSlice'
+import { toggleHeader, toggleSidebar } from '../../features/uiSlice'
 
 const Header = () => {
+    
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const userInfo = useSelector(state => state.user.info);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [isMessageOpen, setIsMessageOpen] = useState(false);
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+    const handleLogOut = (e) => {
+        e.preventDefault();
+        dispatch(logout());
+        navigate('/login');
+    }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            dispatch(fetchUserInfo());
+        }
+    }, [dispatch, isAuthenticated]);
+
+
     return (
         <div className="main-header">
             <div className="main-header-logo">
 
                 <div className="logo-header" data-background-color="dark">
-                    <a href="" className="logo">
+                    <Link to="/" className="logo">
                         <img
                             src="/assets/img/logo.png"
                             alt="navbar brand"
                             className="navbar-brand"
                             height="50"
                         />
-                    </a>
-                    <div className="nav-toggle">
+                    </Link>
+                    <div className="nav-toggle"
+                    onClick={() => {
+                        dispatch(toggleSidebar());
+                    }}>
                         <button className="btn btn-toggle toggle-sidebar">
                             <i className="gg-menu-right"></i>
                         </button>
@@ -23,7 +56,10 @@ const Header = () => {
                             <i className="gg-menu-left"></i>
                         </button>
                     </div>
-                    <button className="topbar-toggler more">
+                    <button className="topbar-toggler more"
+                    onClick={() => {
+                        dispatch(toggleHeader());
+                    }}>
                         <i className="gg-more-vertical-alt"></i>
                     </button>
                 </div>
@@ -79,160 +115,164 @@ const Header = () => {
                             </ul>
                         </li>
                         <li className="nav-item topbar-icon dropdown hidden-caret">
-                            <a
+                            <button
                                 className="nav-link dropdown-toggle"
-                                href="#"
-                                id="messageDropdown"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
+                                onClick={() => {
+                                    isAuthenticated ? setIsMessageOpen(!isMessageOpen) : navigate('/login');
+                                }}
                             >
                                 <FaEnvelope size={16} />
-                            </a>
-                            <ul
-                                className="dropdown-menu messages-notif-box animated fadeIn"
-                                aria-labelledby="messageDropdown"
-                            >
-                                <li>
-                                    <div
-                                        className="dropdown-title d-flex justify-content-between align-items-center"
+                            </button>
+                            {
+                                isMessageOpen && (
+                                    <ul
+                                        className="dropdown-menu messages-notif-box animated fadeIn show"
+                                        aria-labelledby="messageDropdown"
                                     >
-                                        Messages
-                                        <a href="#" className="small">Mark all as read</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="message-notif-scroll scrollbar-outer">
-                                        <div className="notif-center">
-                                            <a href="#">
-                                                <div className="notif-img">
-                                                    <img
-                                                        src="/assets/img/jm_denis.jpg"
-                                                        alt="Img Profile"
-                                                    />
+                                        <li>
+                                            <div
+                                                className="dropdown-title d-flex justify-content-between align-items-center"
+                                            >
+                                                Messages
+                                                <a href="#" className="small">Mark all as read</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="message-notif-scroll scrollbar-outer">
+                                                <div className="notif-center">
+                                                    <Link to="#">
+                                                        <div className="notif-img">
+                                                            <img
+                                                                src="/assets/img/jm_denis.jpg"
+                                                                alt="Img Profile"
+                                                            />
+                                                        </div>
+                                                        <div className="notif-content">
+                                                            <span className="subject">Jimmy Denis</span>
+                                                            <span className="block"> How are you ? </span>
+                                                            <span className="time">5 minutes ago</span>
+                                                        </div>
+                                                    </Link>
+                                                    <a href="#">
+                                                        <div className="notif-img">
+                                                            <img
+                                                                src="/assets/img/chadengle.jpg"
+                                                                alt="Img Profile"
+                                                            />
+                                                        </div>
+                                                        <div className="notif-content">
+                                                            <span className="subject">Chad</span>
+                                                            <span className="block"> Ok, Thanks ! </span>
+                                                            <span className="time">12 minutes ago</span>
+                                                        </div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div className="notif-img">
+                                                            <img
+                                                                src="/assets/img/mlane.jpg"
+                                                                alt="Img Profile"
+                                                            />
+                                                        </div>
+                                                        <div className="notif-content">
+                                                            <span className="subject">Jhon Doe</span>
+                                                            <span className="block">
+                                                                Ready for the meeting today...
+                                                            </span>
+                                                            <span className="time">12 minutes ago</span>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                                <div className="notif-content">
-                                                    <span className="subject">Jimmy Denis</span>
-                                                    <span className="block"> How are you ? </span>
-                                                    <span className="time">5 minutes ago</span>
-                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a className="see-all" href="javascript:void(0);"
+                                            >See all messages<FaAngleRight size={16} />
                                             </a>
-                                            <a href="#">
-                                                <div className="notif-img">
-                                                    <img
-                                                        src="/assets/img/chadengle.jpg"
-                                                        alt="Img Profile"
-                                                    />
-                                                </div>
-                                                <div className="notif-content">
-                                                    <span className="subject">Chad</span>
-                                                    <span className="block"> Ok, Thanks ! </span>
-                                                    <span className="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div className="notif-img">
-                                                    <img
-                                                        src="/assets/img/mlane.jpg"
-                                                        alt="Img Profile"
-                                                    />
-                                                </div>
-                                                <div className="notif-content">
-                                                    <span className="subject">Jhon Doe</span>
-                                                    <span className="block">
-                                                        Ready for the meeting today...
-                                                    </span>
-                                                    <span className="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a className="see-all" href="javascript:void(0);"
-                                    >See all messages<FaAngleRight size={16} />
-                                    </a>
-                                </li>
-                            </ul>
+                                        </li>
+                                    </ul>
+                                )
+                            }
+
                         </li>
                         <li className="nav-item topbar-icon dropdown hidden-caret">
-                            <a
+                            <button
+                                onClick={() => {
+                                    isAuthenticated ? setIsNotificationOpen(!isNotificationOpen) : navigate('/login');
+                                }}
                                 className="nav-link dropdown-toggle"
-                                href="#"
-                                id="notifDropdown"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
                             >
                                 <FaBell size={16} />
                                 <span className="notification">4</span>
-                            </a>
-                            <ul
-                                className="dropdown-menu notif-box animated fadeIn"
-                                aria-labelledby="notifDropdown"
-                            >
-                                <li>
-                                    <div className="dropdown-title">
-                                        You have 4 new notification
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="notif-scroll scrollbar-outer">
-                                        <div className="notif-center">
-                                            <a href="#">
-                                                <div className="notif-icon notif-primary">
-                                                    <i className="fa fa-user-plus"></i>
+                            </button>
+                            {
+                                isNotificationOpen && (
+                                    <ul
+                                        className="dropdown-menu notif-box animated fadeIn show"
+                                        aria-labelledby="notifDropdown"
+                                    >
+                                        <li>
+                                            <div className="dropdown-title">
+                                                You have 4 new notification
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="notif-scroll scrollbar-outer">
+                                                <div className="notif-center">
+                                                    <a href="#">
+                                                        <div className="notif-icon notif-primary">
+                                                            <i className="fa fa-user-plus"></i>
+                                                        </div>
+                                                        <div className="notif-content">
+                                                            <span className="block"> New user registered </span>
+                                                            <span className="time">5 minutes ago</span>
+                                                        </div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div className="notif-icon notif-success">
+                                                            <i className="fa fa-comment"></i>
+                                                        </div>
+                                                        <div className="notif-content">
+                                                            <span className="block">
+                                                                Rahmad commented on Admin
+                                                            </span>
+                                                            <span className="time">12 minutes ago</span>
+                                                        </div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div className="notif-img">
+                                                            <img
+                                                                src="/assets/img/profile2.jpg"
+                                                                alt="Img Profile"
+                                                            />
+                                                        </div>
+                                                        <div className="notif-content">
+                                                            <span className="block">
+                                                                Reza send messages to you
+                                                            </span>
+                                                            <span className="time">12 minutes ago</span>
+                                                        </div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div className="notif-icon notif-danger">
+                                                            <FaHeart size={16} />
+                                                        </div>
+                                                        <div className="notif-content">
+                                                            <span className="block"> Farrah liked Admin </span>
+                                                            <span className="time">17 minutes ago</span>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                                <div className="notif-content">
-                                                    <span className="block"> New user registered </span>
-                                                    <span className="time">5 minutes ago</span>
-                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a className="see-all" href="javascript:void(0);"
+                                            >See all notifications<FaAngleRight size={16} />
                                             </a>
-                                            <a href="#">
-                                                <div className="notif-icon notif-success">
-                                                    <i className="fa fa-comment"></i>
-                                                </div>
-                                                <div className="notif-content">
-                                                    <span className="block">
-                                                        Rahmad commented on Admin
-                                                    </span>
-                                                    <span className="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div className="notif-img">
-                                                    <img
-                                                        src="/assets/img/profile2.jpg"
-                                                        alt="Img Profile"
-                                                    />
-                                                </div>
-                                                <div className="notif-content">
-                                                    <span className="block">
-                                                        Reza send messages to you
-                                                    </span>
-                                                    <span className="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div className="notif-icon notif-danger">
-                                                    <FaHeart size={16} />
-                                                </div>
-                                                <div className="notif-content">
-                                                    <span className="block"> Farrah liked Admin </span>
-                                                    <span className="time">17 minutes ago</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a className="see-all" href="javascript:void(0);"
-                                    >See all notifications<FaAngleRight size={16} />
-                                    </a>
-                                </li>
-                            </ul>
+                                        </li>
+                                    </ul>
+                                )
+                            }
+
                         </li>
                         <li className="nav-item topbar-icon dropdown hidden-caret">
                             <a
@@ -313,55 +353,77 @@ const Header = () => {
                             </div>
                         </li>
                         <li className="nav-item topbar-user dropdown hidden-caret">
-                            <a
-                                className="dropdown-toggle profile-pic"
-                                data-bs-toggle="dropdown"
-                                href="#"
-                                aria-expanded="false"
+                            <button
+                                onClick={() => {
+                                    isAuthenticated ? setIsUserMenuOpen(!isUserMenuOpen) : navigate('/login');
+                                }}
+                                className="dropdown-toggle profile-pic border-0 bg-white"
                             >
                                 <div className="avatar-sm">
-                                    <img
-                                        src="/assets/img/profile.jpg"
-                                        alt="..."
-                                        className="avatar-img rounded-circle"
-                                    />
+                                    {
+                                        isAuthenticated ? (
+                                            <img
+                                                src={userInfo?.userAvatar || "/assets/img/defautlAvatar.png"}
+                                                alt="..."
+                                                className="avatar-img rounded-circle"
+                                            />) : (
+                                            <img
+                                                src="/assets/img/defautlAvatar.png"
+                                                alt="..."
+                                                className="avatar-img rounded-circle"
+                                            />
+                                        )
+                                    }
+
                                 </div>
-                                <span className="profile-username">
-                                    <span className="op-7">Hi,</span>
-                                    <span className="fw-bold">Hizrian</span>
-                                </span>
-                            </a>
-                            <ul className="dropdown-menu dropdown-user animated fadeIn">
-                                <div className="dropdown-user-scroll scrollbar-outer">
-                                    <li>
-                                        <div className="user-box">
-                                            <div className="avatar-lg">
-                                                <img
-                                                    src="assets/img/profile.jpg"
-                                                    alt="image profile"
-                                                    className="avatar-img rounded"
-                                                />
-                                            </div>
-                                            <div className="u-text">
-                                                <h4>Hizrian</h4>
-                                                <p className="text-muted">hello@example.com</p>
-                                            </div>
+                                {
+                                    isAuthenticated ? (
+                                        <span className="profile-username">
+                                            <span className="op-7">Hi</span>
+                                            <span className="fw-bold">, {userInfo?.fullName}</span>
+                                        </span>) : (
+                                        <span className="profile-username">
+                                            <span className="op-7">Hi</span>
+                                        </span>
+                                    )
+                                }
+                            </button>
+                            {
+                                isUserMenuOpen && (
+                                    <ul className="dropdown-menu dropdown-user animated fadeIn show">
+                                        <div className="dropdown-user-scroll scrollbar-outer">
+                                            <li>
+                                                <div className="user-box">
+                                                    <div className="avatar-lg">
+                                                        <img
+                                                            src={userInfo?.userAvatar || "/assets/img/defautlAvatar.png"}
+                                                            alt="image profile"
+                                                            className="avatar-img rounded"
+                                                        />
+                                                    </div>
+                                                    <div className="u-text">
+                                                        <h4>{userInfo?.fullName}</h4>
+                                                        <p className="text-muted">{userInfo?.email}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div className="dropdown-divider"></div>
+                                                <a className="dropdown-item" href="#">Trang cá nhân</a>
+                                                <div className="dropdown-divider"></div>
+                                                <a className="dropdown-item" href="#">Viết Blog</a>
+                                                <div className="dropdown-divider"></div>
+                                                <a className="dropdown-item" href="#">Bài viết của tôi</a>
+                                                <div className="dropdown-divider"></div>
+                                                <a className="dropdown-item" href="#">Settings</a>
+                                                <div className="dropdown-divider"></div>
+                                                <a onClick={handleLogOut} className="dropdown-item" href="#">Đăng xuất</a>
+                                            </li>
                                         </div>
-                                    </li>
-                                    <li>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Trang cá nhân</a>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Viết Blog</a>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Bài viết của tôi</a>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Settings</a>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Đăng xuất</a>
-                                    </li>
-                                </div>
-                            </ul>
+                                    </ul>
+                                )
+                            }
+
                         </li>
                     </ul>
                 </div>

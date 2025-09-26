@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { use } from 'react'
 import { FaBars, FaBook, FaBookOpen, FaCertificate, FaDesktop, FaEllipsisH, FaFacebookMessenger, FaFile, FaHome, FaLayerGroup, FaQuoteRight } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom'
 
 const Sidebar = () => {
@@ -12,6 +13,8 @@ const Sidebar = () => {
         }
         return location.pathname.includes(path) && path != "/";
     };
+
+    const courses = useSelector((state) => state.courses.courses);
 
     return (
         <div className="sidebar" data-background-color="dark">
@@ -64,31 +67,15 @@ const Sidebar = () => {
                             </a>
                             <div className="collapse" id="base">
                                 <ul className="nav nav-collapse" >
-                                    <li className={isActive("/grammar") ? "active" : ""}>
-                                        <Link to="/grammar">
-                                            <span className="sub-item">Grammar</span>
-                                        </Link>
-                                    </li>
-                                    <li className={isActive("/listening") ? "active" : ""}>
-                                        <Link to="/listening">
-                                            <span className="sub-item">Listening</span>
-                                        </Link>
-                                    </li>
-                                    <li className={isActive("/reading") ? "active" : ""}>
-                                        <Link to="/reading">
-                                            <span className="sub-item">Reading</span>
-                                        </Link>
-                                    </li>
-                                    <li className={isActive("/writing") ? "active" : ""}>
-                                        <Link to="/writing">
-                                            <span className="sub-item">Writing</span>
-                                        </Link>
-                                    </li>
-                                    <li className={isActive("/speaking") ? "active" : ""}>
-                                        <Link to="/speaking">
-                                            <span className="sub-item">Speaking</span>
-                                        </Link>
-                                    </li>
+                                    {
+                                        courses.map(course => (
+                                            <li key={course.courseId} className={isActive(`/${course.courseSlug}`) ? "active" : ""}>
+                                                <Link to={`/${course.courseSlug}`}>
+                                                    <span className="sub-item">{course.courseName}</span>
+                                                </Link>
+                                            </li>
+                                        ))
+                                    }
                                 </ul>
                             </div>
                         </li>
