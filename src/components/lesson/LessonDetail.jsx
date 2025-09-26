@@ -1,20 +1,24 @@
-import React from 'react'
+import React, { use, useEffect, useState } from 'react'
 import CompletionCard from '../common/CompletionCard'
 import LessonBanner from './LessonBanner'
 import ExerciseList from '../exercise/ExerciseList'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from "react-hot-toast"
 
 const LessonDetail = () => {
 
-  const location = useLocation();
-
-  const type = location.pathname.split('/')[1];
+  const { lessonSlug } = useParams();
+     
+  const currentLesson = useSelector(state =>
+    state.lesson.lessons.find(lesson => lesson.lessonSlug === lessonSlug)
+  );
 
   return (
     <>
-        <CompletionCard />
-        <LessonBanner />
-        <ExerciseList type={type} />
+      {currentLesson?.myProgress?.status === "COMPLETED" && <CompletionCard />}
+      <LessonBanner currentLesson={currentLesson} />
+      <ExerciseList />
     </>
   )
 }

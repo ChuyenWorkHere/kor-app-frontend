@@ -1,70 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ExerciseCard from './ExerciseCard'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
-const ExerciseList = ({ type }) => {
+const ExerciseList = () => {
+
+    const { courseSlug, lessonSlug } = useParams();
+    const { lessons } = useSelector((state) => state.lesson);
+
+    const contents = lessons?.find(lesson => lesson.lessonSlug === lessonSlug)?.contents;
+
+    const theoryContents = contents?.filter(content => content.contentType === "THEORY");
+    const exerciseContents = contents?.filter(content => content.contentType === "EXERCISE");
+
     return (
         <>
-            <div className='row my-3'>
-                <h1 className="fs-4 fw-bold mb-3 text-md-start text-center">Lý Thuyết</h1>
-                <div className='col-12 col-sm-6 col-md-4'>
-                    <Link className='text-decoration-none' to={`/${type}/lesson/theory`}>
-                        <ExerciseCard />
-                    </Link>
-                    
+            {theoryContents?.length ?
+                <div className='row my-3'>
+                    <h1 className="fs-4 fw-bold mb-3 text-md-start text-center">Lý Thuyết</h1>
+                    {theoryContents.map((theory) => (
+                        <div key={theory.contentId} className='col-12 col-sm-6 col-md-4'>
+                            <Link className='text-decoration-none' to={`/${courseSlug}/${lessonSlug}/theory/${theory.contentId}`}>
+                                <ExerciseCard content={theory} />
+                            </Link>
+                        </div>
+                    ))}
                 </div>
-                <div className='col-12 col-sm-6 col-md-4'>
-                    <Link className='text-decoration-none' to={`/${type}/lesson/theory`}>
-                        <ExerciseCard />
-                    </Link>
-                </div>
-                <div className='col-12 col-sm-6 col-md-4'>
-                    <Link className='text-decoration-none' to={`/${type}/lesson/theory`}>
-                        <ExerciseCard />
-                    </Link>
-                </div>
-            </div>
+                : <div></div>
+            }
 
-            <div className='row my-3'>
-                <h1 className="fs-4 fw-bold mb-3 text-md-start text-center">Bài tập thực hành</h1>
-                <div className='col-12 col-sm-6 col-md-4'>
-                    <Link className='text-decoration-none' to={`/${type}/lesson/practice`}>
-                        <ExerciseCard />
-                    </Link>
+            {exerciseContents?.length
+                ?
+                <div className='row my-3'>
+                    <h1 className="fs-4 fw-bold mb-3 text-md-start text-center">Bài tập</h1>
+                    {exerciseContents.map((exercise) => (
+                        <div key={exercise.contentId} className='col-12 col-sm-6 col-md-4'>
+                            <Link className='text-decoration-none' to={`/${courseSlug}/${lessonSlug}/exercise/${exercise.contentId}`}>
+                                <ExerciseCard content={exercise} />
+                            </Link>
+                        </div>
+                    ))}
                 </div>
-                <div className='col-12 col-sm-6 col-md-4'>
-                    <Link className='text-decoration-none' to={`/${type}/lesson/practice`}>
-                        <ExerciseCard />
-                    </Link>
-                </div>
-                <div className='col-12 col-sm-6 col-md-4'>
-                   <Link className='text-decoration-none' to={`/${type}/lesson/practice`}>
-                        <ExerciseCard />
-                    </Link>
-                </div>
-                <div className='col-12 col-sm-6 col-md-4'>
-                    <Link className='text-decoration-none' to={`/${type}/lesson/practice`}>
-                        <ExerciseCard />
-                    </Link>
-                </div>
-                <div className='col-12 col-sm-6 col-md-4'>
-                    <Link className='text-decoration-none' to={`/${type}/lesson/practice`}>
-                        <ExerciseCard />
-                    </Link>
-                </div>
-                <div className='col-12 col-sm-6 col-md-4'>
-                    <Link className='text-decoration-none' to={"/grammar/lesson/practice"}>
-                        <ExerciseCard />
-                    </Link>
-                </div>
-                <div className='col-12 col-sm-6 col-md-4'>
-                    <Link className='text-decoration-none' to={"/grammar/lesson/practice"}>
-                        <ExerciseCard />
-                    </Link>
-                </div>
-            </div>
-
-
+                : <div></div>
+            }
         </>
 
 

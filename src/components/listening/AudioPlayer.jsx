@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FaLightbulb, FaPause, FaPlayCircle } from 'react-icons/fa'
+import Slider from "@mui/material/Slider";
 
 const AudioPlayer = ({ src }) => {
 
@@ -65,9 +66,8 @@ const AudioPlayer = ({ src }) => {
     };
 
     // Xử lý tua audio
-    const handleSeek = (e) => {
+    const handleSeek = (seekTime) => {
         const audio = audioRef.current;
-        const seekTime = parseFloat(e.target.value);
         if (duration > 0) {
             audio.currentTime = seekTime;
             setCurrentTime(seekTime);
@@ -113,7 +113,7 @@ const AudioPlayer = ({ src }) => {
                     </div>
                 </div>
                 <div className='w-auto'>
-                    <button className="bg-primary bg-opacity-10 border-0 rounded-circle p-3 d-flex justify-content-center align-items-center"
+                    <button className="bg-primary border-0 rounded-circle p-3 d-flex justify-content-center align-items-center"
                         onClick={togglePlay}>
                         {
                             isPlaying
@@ -123,18 +123,27 @@ const AudioPlayer = ({ src }) => {
                     </button>
                 </div>
             </div>
-            <div className="progress" style={{ height: "6px" }}>
-                <input
-                    type="range"
-                    className="progress-bar bg-primary"
-                    min="0"
-                    max={duration || 1}
-                    step="0.01"
-                    value={currentTime || 0}
-                    onChange={handleSeek}
-                    style={{ width: "100%" }}
-                />
-            </div>
+            <Slider
+                min={0}
+                max={duration || 1}
+                step={0.01}
+                value={currentTime || 0}
+                onChange={(e, value) => handleSeek(value)}
+                sx={{
+                    color: "blue", // màu theo theme
+                    height: 8,
+                    "& .MuiSlider-thumb": {
+                        width: 8,
+                        height: 8,
+                        "&:hover, &.Mui-focusVisible": {
+                            boxShadow: "0px 0px 0px 8px rgba(13, 110, 253, 0.16)",
+                        },
+                    },
+                    "& .MuiSlider-rail": {
+                        opacity: 0.28,
+                    },
+                }}
+            />
         </div>
     )
 }

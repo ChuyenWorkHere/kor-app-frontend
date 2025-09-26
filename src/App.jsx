@@ -1,53 +1,63 @@
-import { useState } from 'react'
+import { useEffect} from 'react'
 import Home from './components/home/Home'
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom'
-import Grammar from './components/grammar/Grammar'
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import LessonDetail from './components/lesson/LessonDetail'
 import Layout from './pages/Layout'
-import Listening from './components/listening/Listening'
-import GrammarTheory from './components/grammar/GrammarTheory'
-import GrammarPractice from './components/grammar/GrammarPractice'
-import ListeningPractice from './components/listening/ListeningPractice'
-import ReadingPractice from './components/reading/ReadingPractice'
-import Reading from './components/reading/Reading'
+import Login from './components/auth/Login'
+import Register from './components/auth/Register'
 import Vocabulary from './components/vocabulary/Vocabulary'
-import { BreadcrumbProvider } from './context/BreadcrumbProvider'
+import PrivateRoute from './routes/PrivateRoute'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCourses } from './features/courseSlice'
+import BaseTheory from './components/exercise/BaseTheory'
+import BasePractice from './components/exercise/BasePractice'
+import CourseLayout from './components/common/CourseLayout'
+import HeaderSection from './components/common/HeaderSection'
+import TagList from './components/common/TagList'
+import LessonList from './components/lesson/LessonList'
+
 
 function App() {
+  const { isSidebarOpen, isHeaderOpen } = useSelector((state) => state.ui);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCourses());
+  }, [dispatch]);
 
   return (
-    <BreadcrumbProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Layout />}>
+    <div className={`wrapper ${isSidebarOpen ? 'nav_open' : ''} ${isHeaderOpen ? 'topbar_open' : ''}`}>
+        <Router>
+          <Routes>
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
 
-            <Route index element={<Home />} />
+              <Route element={<PrivateRoute />}>
 
-            <Route path='grammar' element={<Grammar />}>
-              <Route path='lesson' element={<LessonDetail />} />
-              <Route path='lesson/theory' element={<GrammarTheory />} />
-              <Route path='lesson/practice' element={<GrammarPractice />} />
+                <Route path=":courseSlug" element={<CourseLayout />}>
+                  <Route index element={
+                    <>
+                      <HeaderSection />
+                      <TagList />
+                      <LessonList />
+                    </>
+                  } />
+                  <Route path=':lessonSlug' element={<LessonDetail />} />
+                  <Route path=":lessonSlug/theory/:theoryId" element={<BaseTheory />} />
+                  <Route path=":lessonSlug/exercise/:exerciseId" element={<BasePractice />} />
+                </Route>
+                
+                <Route path='vocabulary' element={<Vocabulary />}>
+
+                </Route>
+              </Route>
             </Route>
+          </Routes >
+        </Router >
+    </div>
 
-
-            <Route path='listening' element={<Listening />}>
-              <Route path='lesson' element={<LessonDetail />} />
-              <Route path='lesson/practice' element={<ListeningPractice />} />
-            </Route>
-
-            <Route path='reading' element={<Reading />}>
-              <Route path='lesson' element={<LessonDetail />} />
-              <Route path='lesson/practice' element={<ReadingPractice />} />
-            </Route>
-
-            <Route path='vocabulary' element={<Vocabulary />}>
-
-            </Route>
-
-          </Route>
-        </Routes >
-      </Router >
-    </BreadcrumbProvider>
   )
 }
 
