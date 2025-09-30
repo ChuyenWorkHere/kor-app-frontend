@@ -1,3 +1,4 @@
+//Ở Listening
 export const calculateContentProgress = (questions, currentQuestion, correctProgress) => {
 
   const updatedQuestions = questions.map(q =>

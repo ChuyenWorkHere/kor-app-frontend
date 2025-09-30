@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Switch } from '@mui/material';
 import Congrat from '../common/Congrat'
 import { useUpdateProgress } from "../../hook/useUpdateProgress";
 import { useCooldown } from "../../hook/useCooldown";
+import toast from "react-hot-toast";
 
 const ReadingPractice = ({ questions }) => {
 
-  const [showCongrat, setShowCongrat] = useState(false);
+  const navigate = useNavigate();
+
   const [answers, setAnswers] = useState({});
   const [results, setResults] = useState({});
   const [showResult, setShowResult] = useState(false);
@@ -54,6 +55,8 @@ const ReadingPractice = ({ questions }) => {
       return;
     }
 
+    let isAllCorrect = true;
+
     questions.map(question => {
       const correctAnswerId = question.answers.find(ans => ans.correct)?.answerId;
 
@@ -64,24 +67,46 @@ const ReadingPractice = ({ questions }) => {
           ...prev, [question.questionId]: 1
         }))
       } else {
+        isAllCorrect = false;
         setResults(prev => ({
           ...prev, [question.questionId]: 0
         }))
       }
     })
-
+    if (!isAllCorrect) {
+      setLastCheckTime(now);
+      setCooldown(60);
+      toast("Bạn đã làm rất tốt, hãy thử lại nhé!", {
+        icon: <span style={{ fontSize: 24 }}>💪</span>,
+        style: {
+          borderRadius: '5px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+    } else {
+      toast("Chúc mừng, bạn đã hoàn thành bài tập này!!", {
+        icon: <span style={{ fontSize: 24 }}>🎉</span>,
+        style: {
+          borderRadius: '5px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+      setTimeout(() => {
+        navigate(-1);
+      }, 1000);
+    }
     setShowResult(true);
-    setLastCheckTime(now);
-    setCooldown(60);
+
   }
 
   useCooldown(cooldown, setCooldown);
 
-  useUpdateProgress(results, questions, setShowCongrat);
+  useUpdateProgress(results, questions);
 
   return (
     <div className="container my-4">
-      {showCongrat && <Congrat />}
       <div className="row g-4">
         {/* Left column - Letter */}
         <div className="col-xl-12">
@@ -134,18 +159,16 @@ const ReadingPractice = ({ questions }) => {
             {questions.map((q) => (
               <li className="col-md-6 col-12" key={q.questionId}>
                 <div className="d-flex align-items-start gap-2">
-                  <button className="btn btn-primary btn-sm rounded-circle fw-bold pe-none">
+                  <button className={`btn ${showResult ? (results[q.questionId] ? "btn-success" : "btn-danger") : "btn-primary"} btn-sm rounded-circle fw-bold pe-none`}>
                     {q.orderNo}
                   </button>
                   <div>
                     <span>{q.questionText}</span>
                     <div className="mt-2">
                       {q.answers.map((ans, idx) => {
-
                         const isChecked = ans.answerId === answers[q.questionId];
                         const isCorrect = showResult && results[q.questionId];
                         const isWrong = showResult && isChecked && !isCorrect;
-
                         return (
                           <div className="form-check px-0" key={ans.answerId}>
                             <input

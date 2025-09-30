@@ -2,7 +2,7 @@ import React from "react";
 import { FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import { capitalizeWords } from "../../utils/formatText";
+import { capitalizeWords } from "../../utils/stringUtils";
 
 const ExerciseCard = ({ content }) => {
 

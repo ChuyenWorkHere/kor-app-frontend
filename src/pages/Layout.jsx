@@ -18,7 +18,6 @@ const Layout = () => {
             <Sidebar />
             <div className="main-panel">
                 <Header />
-                <AnimatedBackground />
                 <div className='container'>
                     <div className='page-inner'>
                         {(pathname !== '/') && <BreadCrumb />}

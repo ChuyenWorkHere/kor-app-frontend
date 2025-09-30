@@ -10,24 +10,14 @@ const Deal = () => {
             </div>
 
             <div
-                className="position-relative d-flex flex-column h-100 justify-content-center rounded px-2 py-4 bg-warning"
+                className="position-relative d-flex flex-column h-100 justify-content-center rounded px-2 py-4 bg-dark"
                 style={{
-                    maxHeight: "167px",
-                    minHeight: "157px",
-                    minWidth: "100%"
+                    backgroundColor: "",
+                    minWidth: "100%",
+                    minHeight: "158px",
+                    maxHeight: "168px"
                 }}
             >
-
-                <div
-                    className="position-absolute rounded-circle"
-                    style={{
-                        top: "-2rem",
-                        right: "-2rem",
-                        width: "5rem",
-                        height: "5rem",
-                        backgroundColor: "rgba(255, 255, 255, 0.3)"
-                    }}
-                ></div>
                 <div
                     className="position-absolute rounded-circle"
                     style={{
@@ -39,26 +29,23 @@ const Deal = () => {
                     }}
                 ></div>
 
-
                 <div className="text-center">
-                    <span className="d-block text-dark fs-5">
+                    <span className="d-block text-light fs-5">
                         Trải nghiệm tất cả tính năng
                     </span>
-                    <span className="d-block fw-bold fs-5 mb-3 text-dark">
+                    <span className="d-block fw-bold fs-5 mb-3 text-light">
                         Chỉ với 20.000đ
                     </span>
                     <a href="/pricing" className="text-decoration-none">
                         <button
                             type="button"
-                            className="btn btn-danger px-4 py-2"
-                            style={{ background: "linear-gradient(to bottom right, #ec4899, #f97316)" }}
+                            className="btn btn-danger px-4 py-2 transition-all"
+                            style={{ backgroundColor: "linear-gradient(to bottom right, #ec4899, #f97316)" }}
                         >
                             Buy Now!
                         </button>
                     </a>
                 </div>
-
-
                 <div className="position-absolute bottom-0 end-0">
                     <img src="/assets/img/store-work.BRybF744.svg" alt="Deal" className="img-fluid" style={{ maxWidth: "9rem" }} />
                 </div>

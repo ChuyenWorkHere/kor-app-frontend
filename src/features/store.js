@@ -5,6 +5,7 @@ import userSlice from "./userSlice";
 import lessonSlice from "./lessonSlice";
 import questionSlice from "./questionSlice";
 import uiSlice from "./uiSlice";
+import searchSlice from "./searchSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     lesson: lessonSlice.reducer,
     question: questionSlice.reducer,
     ui: uiSlice.reducer,
+    search: searchSlice.reducer,
   },
 });
 
