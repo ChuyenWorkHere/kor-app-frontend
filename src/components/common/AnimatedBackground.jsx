@@ -2,7 +2,7 @@ import React from "react";
 
 const AnimatedBackground = () => {
   return (
-    <div className="position-fixed top-0 start-0 w-100 h-100 overflow-hidden" style={{ zIndex: -10 }}>
+    <div className="position-fixed top-0 start-0 w-100 h-100 overflow-hidden" style={{ zIndex: -10 }} >
       
       <div className="position-absolute top-0 start-0 w-100 h-100 bg-gradient"></div>
 
@@ -40,8 +40,6 @@ const AnimatedBackground = () => {
       </div>
 
       <div className="position-absolute top-0 start-0 w-100 h-100 opacity-50 dotted-pattern"></div>
-
-      
       <div className="position-fixed top-0 start-0 w-100 h-100 pointer-events-none radial-glow"></div>
     </div>
   );

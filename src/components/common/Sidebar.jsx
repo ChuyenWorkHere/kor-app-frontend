@@ -20,13 +20,13 @@ const Sidebar = () => {
         <div className="sidebar" data-background-color="dark">
             <div className="sidebar-logo">
                 {/* <!-- Logo Header --> */}
-                <div className="logo-header" data-background-color="dark">
+                <div className="logo-header" data-background-color="light">
                     <Link to={"/"} className="logo">
                         <img
                             src="/assets/img/logo.png"
                             alt="navbar brand"
                             className="navbar-brand"
-                            height="50"
+                            height="100"
                         />
                     </Link>
                     <div className="nav-toggle">
