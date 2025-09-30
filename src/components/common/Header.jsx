@@ -42,7 +42,7 @@ const Header = () => {
                             src="/assets/img/logo.png"
                             alt="navbar brand"
                             className="navbar-brand"
-                            height="50"
+                            height="100"
                         />
                     </Link>
                     <div className="nav-toggle"

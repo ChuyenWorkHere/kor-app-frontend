@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import Congrat from '../common/Congrat'
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { FaCheck } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
-import { syncProgressBackEnd } from '../../services/progressService';
-import { updateProgress } from '../../features/lessonSlice';
-import { toast } from "react-hot-toast"
+import { useUpdateProgress } from '../../hook/useUpdateProgress';
+import { useCooldown } from '../../hook/useCooldown';
+import { useNavigate } from 'react-router-dom';
 
 
 const GrammarPractice = ({ questions }) => {
 
-    const { lessonSlug, exerciseId } = useParams();
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { lessons } = useSelector(state => state.lesson);
-    const currentLesson = lessons?.find(lesson => lesson?.lessonSlug === lessonSlug);
-    const contents = currentLesson?.contents;
-    const currentContent = contents?.find(content => content.contentId === Number(exerciseId));
+    const currentContent = questions[0]?.content;
 
     const [showCongrat, setShowCongrat] = useState(false);
     const [answers, setAnswers] = useState({});
     const [results, setResults] = useState({});
     const [showResult, setShowResult] = useState(false);
+
+    //Khoảng cách giữa các lần kiểm tra đáp án
+    const [lastCheckTime, setLastCheckTime] = useState(null);
+    const [cooldown, setCooldown] = useState(0);
 
     const handleAnswerTyping = (questionId, value) => {
         setShowResult(false);
@@ -32,43 +30,14 @@ const GrammarPractice = ({ questions }) => {
         }));
     }
 
-    useEffect(() => {
-        
-        const percentage = Math.round(Object.values(results).filter(r => r === 1).length / questions.length * 100);
-        
-        let status = "NOT_STARTED";
-        if (percentage === 100) {
-            status = "COMPLETED";
-        } else if (percentage > 0) {
-            status = "IN_PROGRESS";
-        }
 
-        //Update content progress ui
-        dispatch(updateProgress({
-            lessonId: currentLesson.lessonId,
-            contentId: currentContent.contentId,
-            contentProgress: { status, percentage }
-        }));
-
-        if (percentage === 100) {
-            setShowCongrat(true);
-
-            //update content progress backend
-            syncProgressBackEnd({
-                ...currentContent.myProgress,
-                status,
-                percentage
-            }).catch(err => {
-                toast.error(err.message || "Thất bại khi lưu tiến trình học tập");
-            });
-
-            setTimeout(() => {
-                setShowCongrat(false);
-            }, 2000)
-        }
-    }, [results]);
 
     const handleCheck = () => {
+
+        const now = Date.now();
+        if (lastCheckTime && now - lastCheckTime < 60000) {
+            return;
+        }
 
         questions.map(question => {
             const correctAnswer = question.answers.find(ans => ans.correct)?.answerText;
@@ -86,7 +55,11 @@ const GrammarPractice = ({ questions }) => {
             }
         })
         setShowResult(true);
+        setLastCheckTime(now);
+        setCooldown(60);
     }
+    useCooldown(cooldown, setCooldown);
+    useUpdateProgress(results, questions, setShowCongrat);
 
     return (
         <div className="p-2 position-relative">
@@ -129,8 +102,14 @@ const GrammarPractice = ({ questions }) => {
 
             {/* Buttons */}
             <div className="mt-4 d-flex justify-content-center gap-2">
-                <button onClick={handleCheck} className="btn btn-primary fw-medium">Kiểm tra</button>
-                <button className="btn btn-success fw-medium">Bài tiếp theo</button>
+
+                <button onClick={() => navigate(-1)} className="btn btn-primary fw-medium">Quay lại</button>
+                <button onClick={handleCheck}
+                    className="btn btn-success fw-medium"
+                    disabled={cooldown > 0}>
+                    {cooldown > 0 ? `Chờ ${cooldown}s...` : "Kiểm tra"}
+                </button>
+
             </div>
         </div>
     )

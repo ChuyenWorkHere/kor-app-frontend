@@ -1,98 +1,191 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Switch } from '@mui/material';
+import Congrat from '../common/Congrat'
+import { useUpdateProgress } from "../../hook/useUpdateProgress";
+import { useCooldown } from "../../hook/useCooldown";
 
 const ReadingPractice = ({ questions }) => {
-
-  const { lessonSlug, exerciseId } = useParams();
-  const dispatch = useDispatch();
-
-  const { lessons } = useSelector(state => state.lesson);
-  const currentLesson = lessons?.find(lesson => lesson?.lessonSlug === lessonSlug);
-  const contents = currentLesson?.contents;
-  const currentContent = contents?.find(content => content.contentId === Number(exerciseId));
 
   const [showCongrat, setShowCongrat] = useState(false);
   const [answers, setAnswers] = useState({});
   const [results, setResults] = useState({});
   const [showResult, setShowResult] = useState(false);
 
+  //Highlight text
+  const [highlightMode, setHighlightMode] = useState(false);
+
+  //Khoảng cách giữa các lần kiểm tra đáp án
+  const [lastCheckTime, setLastCheckTime] = useState(null);
+  const [cooldown, setCooldown] = useState(0);
+
+  const handleHighlight = () => {
+    console.log(highlightMode);
+    if (!highlightMode) return;
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      if (!range.collapsed) {
+        const span = document.createElement("span");
+        span.style.backgroundColor = "yellow";
+        try {
+          range.surroundContents(span);
+          selection.removeAllRanges();
+        } catch (err) {
+          console.error("Không thể highlight:", err);
+        }
+      }
+    }
+  };
+
+  const handleSelectAnswer = (questionId, answerId) => {
+    setShowResult(false);
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: answerId
+    }));
+  };
+
+  const handleCheckResult = () => {
+
+    const now = Date.now();
+    if (lastCheckTime && now - lastCheckTime < 60000) {
+      return;
+    }
+
+    questions.map(question => {
+      const correctAnswerId = question.answers.find(ans => ans.correct)?.answerId;
+
+      const userAnswerId = answers[question.questionId];
+
+      if (correctAnswerId === userAnswerId) {
+        setResults(prev => ({
+          ...prev, [question.questionId]: 1
+        }))
+      } else {
+        setResults(prev => ({
+          ...prev, [question.questionId]: 0
+        }))
+      }
+    })
+
+    setShowResult(true);
+    setLastCheckTime(now);
+    setCooldown(60);
+  }
+
+  useCooldown(cooldown, setCooldown);
+
+  useUpdateProgress(results, questions, setShowCongrat);
+
   return (
     <div className="container my-4">
+      {showCongrat && <Congrat />}
       <div className="row g-4">
         {/* Left column - Letter */}
-        <div className="col-xl-7 p-0">
+        <div className="col-xl-12">
           <div
-            className="p-4 bg-light border rounded overflow-auto max-h-lg-600"
+            className="p-4 bg-light border rounded overflow-auto position-relative"
           >
-            <p>Hi Lucia</p>
-            <p>
-              How are you? It was so nice to meet you last week in Sydney at the
-              sales meeting. How was the rest of your trip? Did you see any
-              kangaroos? I hope you got home to Mexico City OK.
-            </p>
-            <p>
-              Anyway, I have the documents about the new Berlin offices. We're
-              going to be open in three months. I moved here from London just
-              last week. They are very nice offices, and the location is
-              perfect. There are lots of restaurants, cafés and banks in the
-              area. There's also public transport; we are next to an U-Bahn
-              (that is the name for the metro here). Maybe you can come and see
-              them one day? I would love to show you Berlin, especially in the
-              winter. You said you have never seen snow – you will see lots
-              here!
-            </p>
-            <p>
-              Here's a photo of you and me at the restaurant in Sydney. That was
-              a very fun night! Remember the singing Englishman? Crazy! Please
-              send me any other photos you have of that night. Good memories.
-            </p>
-            <p>
-              Please give me your email address and I will send you the
-              documents.
-            </p>
-            <p>Bye for now</p>
-            <p>Mikel</p>
+            <div className="position-absolute end-0 me-4">
+              <Switch checked={highlightMode} onChange={(e, checked) => setHighlightMode(checked)} />
+              <span>Highlight nội dung</span>
+            </div>
+            <div onMouseUp={handleHighlight}>
+              <p>Hi Lucia</p>
+              <p>
+                How are you? It was so nice to meet you last week in Sydney at the
+                sales meeting. How was the rest of your trip? Did you see any
+                kangaroos? I hope you got home to Mexico City OK.
+              </p>
+              <p>
+                Anyway, I have the documents about the new Berlin offices. We're
+                going to be open in three months. I moved here from London just
+                last week. They are very nice offices, and the location is
+                perfect. There are lots of restaurants, cafés and banks in the
+                area. There's also public transport; we are next to an U-Bahn
+                (that is the name for the metro here). Maybe you can come and see
+                them one day? I would love to show you Berlin, especially in the
+                winter. You said you have never seen snow – you will see lots
+                here!
+              </p>
+              <p>
+                Here's a photo of you and me at the restaurant in Sydney. That was
+                a very fun night! Remember the singing Englishman? Crazy! Please
+                send me any other photos you have of that night. Good memories.
+              </p>
+              <p>
+                Please give me your email address and I will send you the
+                documents.
+              </p>
+              <p>Bye for now</p>
+              <p>Mikel</p>
+            </div>
+
           </div>
         </div>
 
         {/* Right column - Questions */}
         <div
-          className="col-xl-5 overflow-lg-auto overflow-none max-h-lg-600"
+          className="col-xl-12"
         >
-          <ul className="list-unstyled d-flex flex-column gap-4">
+          <ul className="list-unstyled row">
             {questions.map((q) => (
-              <li key={q.questionId}>
+              <li className="col-md-6 col-12" key={q.questionId}>
                 <div className="d-flex align-items-start gap-2">
-                  <button className="btn btn-primary btn-sm rounded-circle fw-bold">
-                    {q.questionId}
+                  <button className="btn btn-primary btn-sm rounded-circle fw-bold pe-none">
+                    {q.orderNo}
                   </button>
                   <div>
                     <span>{q.questionText}</span>
                     <div className="mt-2">
-                      {q.answers.map((ans, idx) => (
-                        <div className="form-check" key={ans.answerId}>
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name={q.questionId}
-                            id={ans.answerId}
-                            value={ans.answerText}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor={q.questionId}
-                          >
-                            {String.fromCharCode(65 + idx)} {opt}
-                          </label>
-                        </div>
-                      ))}
+                      {q.answers.map((ans, idx) => {
+
+                        const isChecked = ans.answerId === answers[q.questionId];
+                        const isCorrect = showResult && results[q.questionId];
+                        const isWrong = showResult && isChecked && !isCorrect;
+
+                        return (
+                          <div className="form-check px-0" key={ans.answerId}>
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name={q.questionId}
+                              id={ans.answerId}
+                              value={ans.answerText}
+                              checked={isChecked || false}
+                              onChange={() => handleSelectAnswer(q.questionId, ans.answerId)}
+                            />
+                            <label
+                              className={`form-check-label ${isCorrect && isChecked ? "text-success" : ""} ${isWrong && isChecked ? "text-danger" : ""}`}
+                              htmlFor={ans.answerId}
+                            >
+                              {ans.answerText}
+                            </label>
+                          </div>
+                        )
+
+                      })}
                     </div>
                   </div>
                 </div>
               </li>
             ))}
           </ul>
+
+        </div>
+
+        {/* Buttons */}
+        <div className="mt-4 d-flex justify-content-center gap-2">
+
+          <button onClick={() => navigate(-1)} className="btn btn-primary fw-medium">Quay lại</button>
+          <button onClick={handleCheckResult}
+            className="btn btn-success fw-medium"
+            disabled={cooldown > 0}>
+            {cooldown > 0 ? `Chờ ${cooldown}s...` : "Kiểm tra"}
+          </button>
+
         </div>
       </div>
     </div>
