@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import api from "../../config/axiosConfig";
+import { useDispatch } from "react-redux";
+import { setTag } from "../../features/searchSlice";
 
 const TagList = () => {
+  const dispatch = useDispatch();
   const [tags, setTags] = useState([{ tagId: 0, tagName: "Tất cả" }]);
   const [currentTag, setCurrentTag] = useState(0);
 
@@ -15,6 +18,12 @@ const TagList = () => {
         console.error("Error fetching tags:", error);
       });
   }, []);
+
+  useEffect(() => {
+    dispatch(setTag({
+      tagId: currentTag
+    }))
+  }, [currentTag, tags, dispatch])
 
   return (
     <div className="position-relative mb-4">

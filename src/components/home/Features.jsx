@@ -22,7 +22,7 @@ const Features = () => {
                     Đã xảy ra lỗi: {error}
                 </div>
             ) : (
-                <ul className="d-flex align-items-center gap-3 pb-1 ps-0 flex-wrap flex-lg-nowrap overflow-lg-auto justify-content-center overflow-auto">
+                <ul className="d-flex align-items-center gap-3 pb-1 ps-0 flex-wrap flex-lg-nowrap overflow-lg-auto justify-content-center justify-content-md-start overflow-auto">
                     {courses.map((course, index) => (
                         <li
                             key={index}

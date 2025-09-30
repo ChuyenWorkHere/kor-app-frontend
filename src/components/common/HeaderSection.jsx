@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft, FaSearch } from "react-icons/fa";
 import api from "../../config/axiosConfig";
+import { useDispatch } from "react-redux";
+import { setSearchParams } from "../../features/searchSlice";
 
 const levelColor = {
   1: "#5f2eea",
@@ -11,8 +13,8 @@ const levelColor = {
 
 const HeaderSection = () => {
 
-  const [levels, setLevels] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState(null);
+  const dispatch = useDispatch();
+
   useEffect(() => {
 
     api.get("/public/levels")
@@ -30,6 +32,20 @@ const HeaderSection = () => {
 
   }, []);
 
+  const [levels, setLevels] = useState([]);
+
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [status, setStatus] = useState("ALL");
+  const [keyword, setKeyword] = useState("");
+
+  useEffect(() => {
+      dispatch(setSearchParams({
+        levelId: selectedLevel?.levelId,
+        status,
+        keyword
+      }))
+  }, [status, keyword, selectedLevel, levels, dispatch])
+
   return (
     <div
       className="position-relative overflow-hidden border-bottom"
@@ -42,10 +58,11 @@ const HeaderSection = () => {
             <select
               className="form-select px-3 py-2 rounded w-100 w-sm-auto"
               value={selectedLevel?.levelId || 0}
-              onChange={e =>
-                setSelectedLevel(
-                  levels.find(level => level.levelId === Number(e.target.value))
-                )
+              onChange={e => {
+                  setSelectedLevel(
+                    levels.find(level => level.levelId === Number(e.target.value))
+                  );
+                }
               }
             >
               {levels.map(level => (
@@ -59,11 +76,13 @@ const HeaderSection = () => {
             <select
               className="form-select px-3 py-2 rounded w-100 w-sm-auto"
               aria-label="Chọn trạng thái"
+              onChange={(e) => setStatus(e.target.value)}
+              value={status}
             >
-              <option value="all">Tất cả trạng thái</option>
-              <option value="not-started">Chưa bắt đầu</option>
-              <option value="in-progress">Đang học</option>
-              <option value="completed">Đã hoàn thành</option>
+              <option value="ALL">Tất cả trạng thái</option>
+              <option value="NOT_STARTED">Chưa bắt đầu</option>
+              <option value="IN_PROGRESS">Đang học</option>
+              <option value="COMPLETED">Đã hoàn thành</option>
             </select>
 
             {/* Search box */}
@@ -77,6 +96,10 @@ const HeaderSection = () => {
                   type="text"
                   placeholder="Tìm kiếm..."
                   className="form-control ps-5 rounded"
+                  value={keyword}
+                  onChange={(e) => {
+                    setKeyword(e.target.value);
+                  }}
                 />
               </div>
             </div>

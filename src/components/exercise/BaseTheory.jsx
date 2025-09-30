@@ -1,9 +1,70 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { useUpdateProgress } from '../../hook/useUpdateProgress';
+import { updateProgress } from '../../features/lessonSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { syncProgressBackEnd } from '../../services/progressService';
+import toast from 'react-hot-toast';
 
 
 const BaseTheory = () => {
-  const { courseSlug, lessonSlug, exerciseId } = useParams();
+
+  const { lessonSlug, theoryId } = useParams();
+  const navigate = useNavigate();
+  const currentLesson = useSelector(state => state.lesson.lessons?.find(lesson => lesson?.lessonSlug === lessonSlug));
+  const contents = currentLesson?.contents;
+  const currentContent = contents.find(content => content.contentId === Number(theoryId));
+  const [timeLeft, setTimeLeft] = useState(20);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+
+      //Update content progress ui
+      dispatch(updateProgress({
+        lessonId: currentLesson?.lessonId,
+        contentId: currentContent?.contentId,
+        contentProgress: { status: "COMPLETED", percentage: 100 }
+      }));
+
+      //update content progress backend
+      syncProgressBackEnd({
+        ...currentContent.myProgress,
+        status: "COMPLETED",
+        percentage: 100,
+      }).catch(err => {
+        toast.error(err?.data?.message || "Thất bại khi lưu tiến trình học tập");
+      });
+
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const handleCheck = () => {
+    if (timeLeft > 0) {
+      toast('Bạn cần học ít nhất 2 phút để hoàn thành bài này!', {
+        duration: 4000,
+        position: 'top-center',
+        icon: <span style={{ fontSize: '28px' }}>⏰</span>,
+        style: {
+          fontSize: 14
+        }
+      });
+    } else {
+      toast('Chúc mừng bạn đã hoàn thành bài học!', {
+        duration: 4000,
+        position: 'top-center',
+        icon: <span style={{ fontSize: '28px' }}>👏</span>,
+      });
+      navigate(-1);
+    }
+  }
 
   return (
     <div
@@ -38,6 +99,17 @@ const BaseTheory = () => {
         <li>2. The earth ____ (circle) the sun.</li>
         <li>3. They ____ (not/play) football on Mondays.</li>
       </ul>
+
+      {/* Buttons */}
+      <div className="mt-4 d-flex justify-content-center gap-2">
+
+        <button onClick={() => navigate(-1)} className="btn btn-primary fw-medium">Quay lại</button>
+        <button onClick={handleCheck}
+          className="btn btn-success fw-medium">
+          Hoàn thành
+        </button>
+
+      </div>
     </div>
   )
 

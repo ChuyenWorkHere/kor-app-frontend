@@ -94,7 +94,7 @@ const PracticeContent = ({ currentQuestionIndex, setCurrentQuestionIndex, questi
     updateQuestionProgress();
 
     //Tạo progress giả để không cần đợi redux cập nhật
-    const { updatedQuestions, percentage, status } = calculateContentProgress(questionList, currentQuestion, correctProgress);
+    const { percentage, status } = calculateContentProgress(questionList, currentQuestion, correctProgress);
     
     //Update content progress ui
     dispatch(updateProgress({

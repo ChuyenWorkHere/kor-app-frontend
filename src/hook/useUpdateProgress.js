@@ -5,7 +5,7 @@ import { syncProgressBackEnd } from "../services/progressService";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 
-export const useUpdateProgress = (results, questions, setShowCongrat) => {
+export const useUpdateProgress = (results, questions) => {
 
     const { lessonSlug, exerciseId } = useParams();
     const dispatch = useDispatch();
@@ -16,16 +16,13 @@ export const useUpdateProgress = (results, questions, setShowCongrat) => {
     const currentContent = contents.find(content => content.contentId === Number(exerciseId));
 
     useEffect(() => {
-
         const percentage = Math.round(Object.values(results).filter(r => r === 1).length / questions.length * 100);
-
         let status = "NOT_STARTED";
         if (percentage === 100) {
             status = "COMPLETED";
         } else if (percentage > 0) {
             status = "IN_PROGRESS";
         }
-
         //Update content progress ui
         dispatch(updateProgress({
             lessonId: currentLesson.lessonId,
@@ -34,7 +31,6 @@ export const useUpdateProgress = (results, questions, setShowCongrat) => {
         }));
 
         if (percentage === 100) {
-            setShowCongrat(true);
 
             //update content progress backend
             syncProgressBackEnd({
@@ -44,10 +40,6 @@ export const useUpdateProgress = (results, questions, setShowCongrat) => {
             }).catch(err => {
                 toast.error(err.message || "Thất bại khi lưu tiến trình học tập");
             });
-
-            setTimeout(() => {
-                setShowCongrat(false);
-            }, 2000)
         }
     }, [results]);
 

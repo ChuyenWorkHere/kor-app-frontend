@@ -5,6 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import { useUpdateProgress } from '../../hook/useUpdateProgress';
 import { useCooldown } from '../../hook/useCooldown';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 
 const GrammarPractice = ({ questions }) => {
@@ -13,7 +14,6 @@ const GrammarPractice = ({ questions }) => {
 
     const currentContent = questions[0]?.content;
 
-    const [showCongrat, setShowCongrat] = useState(false);
     const [answers, setAnswers] = useState({});
     const [results, setResults] = useState({});
     const [showResult, setShowResult] = useState(false);
@@ -39,6 +39,8 @@ const GrammarPractice = ({ questions }) => {
             return;
         }
 
+        let isAllCorrect = true;
+
         questions.map(question => {
             const correctAnswer = question.answers.find(ans => ans.correct)?.answerText;
 
@@ -49,22 +51,43 @@ const GrammarPractice = ({ questions }) => {
                     ...prev, [question.questionId]: 1
                 }))
             } else {
+                isAllCorrect = false;
                 setResults(prev => ({
                     ...prev, [question.questionId]: 0
                 }))
             }
         })
+        if (!isAllCorrect) {
+            setLastCheckTime(now);
+            setCooldown(60);
+            toast("Bạn đã làm rất tốt, hãy thử lại nhé!", {
+                icon: <span style={{ fontSize: 24 }}>💪</span>,
+                style: {
+                    borderRadius: '5px',
+                    background: '#333',
+                    color: '#fff',
+                },
+            });
+        } else {
+            toast("Chúc mừng, bạn đã hoàn thành bài tập này!!", {
+                icon: <span style={{ fontSize: 24 }}>🎉</span>,
+                style: {
+                    borderRadius: '5px',
+                    background: '#333',
+                    color: '#fff',
+                },
+            });
+            setTimeout(() => {
+                navigate(-1);
+            }, 1000);
+        }
         setShowResult(true);
-        setLastCheckTime(now);
-        setCooldown(60);
     }
     useCooldown(cooldown, setCooldown);
-    useUpdateProgress(results, questions, setShowCongrat);
+    useUpdateProgress(results, questions);
 
     return (
         <div className="p-2 position-relative">
-
-            {showCongrat && <Congrat />}
 
             {/* Tiêu đề */}
             <div className="mb-2">
