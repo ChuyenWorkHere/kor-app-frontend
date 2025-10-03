@@ -15,6 +15,7 @@ import CourseLayout from './components/common/CourseLayout'
 import HeaderSection from './components/common/HeaderSection'
 import TagList from './components/common/TagList'
 import LessonList from './components/lesson/LessonList'
+import { Toaster } from 'react-hot-toast'
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
             </Route>
           </Routes >
         </Router >
+        <Toaster />
     </div>
 
   )

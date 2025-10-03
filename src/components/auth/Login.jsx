@@ -35,7 +35,7 @@ const Login = () => {
     <div className="h-100 rounded bg-gradient shadow d-flex align-items-center justify-content-center">
       <div className='shadow p-5'>
         <h2 className="mb-4 fw-bold text-black fs-4">Welcome Back</h2>
-        <div className="mb-4 d-flex flex-wrap align-items-center justify-content-center gap-3">
+        <div className="mb-4 d-flex align-items-center justify-content-center gap-3">
           <button className="d-flex align-items-center gap-2 rounded border border-secondary px-4 py-2 bg-white hover-shadow">
             <img src="/assets/img/google.png" alt="Google Icon" style={{ width: "20px" }} />
             <span className="fw-semibold text-black">Login with Google</span>
@@ -52,7 +52,7 @@ const Login = () => {
           <div className="flex-grow-1" style={{ height: "2px", background: "#e2e8f0" }}></div>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form className='rounded' onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label fw-semibold">Username</label>
             <input

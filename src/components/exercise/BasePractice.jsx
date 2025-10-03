@@ -7,11 +7,13 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllQuestionsInContent } from '../../features/questionSlice';
 import { useBreadCrumb } from '../../hook/useBreadCrumb';
+import WritingPractice from '../writing/WritingPractice';
 
 const practiceComponents = {
   grammar: GrammarPractice,
   listening: ListeningPractice,
   reading: ReadingPractice,
+  writing: WritingPractice,
 };
 
 const BasePractice = () => {

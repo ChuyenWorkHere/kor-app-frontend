@@ -50,10 +50,10 @@ const LessonCard = ({ lesson }) => {
 
           {/* Content */}
           <div className="flex-grow-1 p-3">
-            <h3 className="h6 fw-bold text-dark mb-1 lesson-title">
+            <h3 className="h6 fw-bold text-dark mb-1 title-truncate">
               {lesson.lessonTitle}
             </h3>
-            <p className="text-muted small mb-3 lesson-desc">
+            <p className="text-muted small mb-3 desc-truncate">
               {lesson.lessonDesc}
             </p>
 

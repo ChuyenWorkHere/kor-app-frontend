@@ -26,7 +26,6 @@ const Layout = () => {
                 </div>
                 <Footer />
             </div>
-            <Toaster />
         </>
     )
 }
