@@ -27,8 +27,8 @@ const ExerciseCard = ({ content }) => {
       </div>
 
       <div className="card-body py-4">
-        <h5 className="card-title fw-bold text-dark fs-5">{content.contentName}</h5>
-        <p className="card-text text-muted small">{content.contentDesc}</p>
+        <h5 className="card-title fw-bold text-dark fs-5 title-truncate">{content.contentName}</h5>
+        <p className="card-text text-muted small desc-truncate">{content.contentDesc}</p>
 
         {/* Tags, Level */}
         <div className="d-flex gap-2 flex-wrap">

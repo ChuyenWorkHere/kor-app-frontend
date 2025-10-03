@@ -12,7 +12,7 @@ const LessonBanner = ({currentLesson}) => {
       <div className="d-flex flex-md-row gap-4 gap-md-0 flex-column justify-content-between align-items-center">
         <div className="pe-3 min-w-0">
           {/* Badges */}
-          <div className="d-flex align-items-start mb-3 flex-wrap gap-2">
+          <div className="d-flex align-items-start justify-content-center mb-3 flex-wrap gap-2">
             <span className="badge m-0 rounded-pill bg-light text-primary shadow-sm d-flex align-items-center py-2 px-3 fs-6">
               <FaCheckCircle size={16} className='me-1' /> {currentLesson?.level?.levelName || "Not Found"}
             </span>

@@ -15,6 +15,8 @@
     "@mui/material": "^7.3.1",
     "@reduxjs/toolkit": "^2.9.0",
     "axios": "^1.11.0",
+    "diff": "^8.0.2",
+    "jwt-decode": "^4.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hot-toast": "^2.6.0",

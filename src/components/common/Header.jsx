@@ -16,7 +16,6 @@ const Header = () => {
 
     const [isMessageOpen, setIsMessageOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-    const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
     const handleLogOut = (e) => {
