@@ -16,6 +16,7 @@ import HeaderSection from './components/common/HeaderSection'
 import TagList from './components/common/TagList'
 import LessonList from './components/lesson/LessonList'
 import { Toaster } from 'react-hot-toast'
+import Pricing from './components/pricing/Pricing'
 
 
 function App() {
@@ -49,7 +50,7 @@ function App() {
                   <Route path=":lessonSlug/theory/:theoryId" element={<BaseTheory />} />
                   <Route path=":lessonSlug/exercise/:exerciseId" element={<BasePractice />} />
                 </Route>
-                
+                <Route path='pricing' element={<Pricing />} />
                 <Route path='vocabulary' element={<Vocabulary />}>
 
                 </Route>
