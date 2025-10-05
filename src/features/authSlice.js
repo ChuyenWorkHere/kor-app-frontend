@@ -20,18 +20,17 @@ export const login = createAsyncThunk (
             const res = await authService.login(formData);
 
             const { username, token, roles } = res.data;
-            console.log("User logged in:", { username, token, roles });
 
             localStorage.setItem("auth", JSON.stringify({ username, token, roles }));
             
-            toast.success("Login successful!");
+            toast.success("Đăng nhập thành công!");
             navigate("/");
 
             return { username, token, roles };
         } catch (error) {
-            toast.error(error?.response?.data?.message || "Login failed");
+            toast.error(error?.response?.data?.message || "Đăng nhập thất bại!");
             resetForm();
-            return thunkAPI.rejectWithValue("Login failed");
+            return thunkAPI.rejectWithValue("Đăng nhập thất bại!");
         }
     }
 )

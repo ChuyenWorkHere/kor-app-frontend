@@ -12,6 +12,7 @@ const Layout = () => {
 
     const location = useLocation();
     const pathname = location.pathname;
+    const removedBreadcrumb = ["/", "/pricing"]
 
     return (
         <>
@@ -20,7 +21,7 @@ const Layout = () => {
                 <Header />
                 <div className='container'>
                     <div className='page-inner'>
-                        {(pathname !== '/') && <BreadCrumb />}
+                        {(!removedBreadcrumb.includes(pathname)) && <BreadCrumb />}
                         <Outlet />
                     </div>
                 </div>

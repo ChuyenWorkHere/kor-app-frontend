@@ -7,16 +7,18 @@ import { fetchUserInfo } from '../../features/userSlice'
 import { toggleHeader, toggleSidebar } from '../../features/uiSlice'
 
 const Header = () => {
-    
+
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const userInfo = useSelector(state => state.user.info);
+    const isPremium = userInfo?.premium;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [isMessageOpen, setIsMessageOpen] = useState(false);
-    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [activeMenu, setActiveMenu] = useState(null);
+    const toggleMenu = (menu) => {
+        setActiveMenu(activeMenu === menu ? null : menu);
+    };
 
     const handleLogOut = (e) => {
         e.preventDefault();
@@ -28,8 +30,7 @@ const Header = () => {
         if (isAuthenticated) {
             dispatch(fetchUserInfo());
         }
-    }, [dispatch, isAuthenticated]);
-
+    }, [dispatch, isAuthenticated, isPremium]);
 
     return (
         <div className="main-header">
@@ -45,9 +46,9 @@ const Header = () => {
                         />
                     </Link>
                     <div className="nav-toggle"
-                    onClick={() => {
-                        dispatch(toggleSidebar());
-                    }}>
+                        onClick={() => {
+                            dispatch(toggleSidebar());
+                        }}>
                         <button className="btn btn-toggle toggle-sidebar">
                             <i className="gg-menu-right"></i>
                         </button>
@@ -56,9 +57,9 @@ const Header = () => {
                         </button>
                     </div>
                     <button className="topbar-toggler more"
-                    onClick={() => {
-                        dispatch(toggleHeader());
-                    }}>
+                        onClick={() => {
+                            dispatch(toggleHeader());
+                        }}>
                         <i className="gg-more-vertical-alt"></i>
                     </button>
                 </div>
@@ -117,13 +118,13 @@ const Header = () => {
                             <button
                                 className="nav-link dropdown-toggle"
                                 onClick={() => {
-                                    isAuthenticated ? setIsMessageOpen(!isMessageOpen) : navigate('/login');
+                                    isAuthenticated ? toggleMenu('messages') : navigate('/login');
                                 }}
                             >
                                 <FaEnvelope size={16} />
                             </button>
                             {
-                                isMessageOpen && (
+                                activeMenu === 'messages' && (
                                     <ul
                                         className="dropdown-menu messages-notif-box animated fadeIn show"
                                         aria-labelledby="messageDropdown"
@@ -196,7 +197,7 @@ const Header = () => {
                         <li className="nav-item topbar-icon dropdown hidden-caret">
                             <button
                                 onClick={() => {
-                                    isAuthenticated ? setIsNotificationOpen(!isNotificationOpen) : navigate('/login');
+                                    isAuthenticated ? toggleMenu('notifications') : navigate('/login');
                                 }}
                                 className="nav-link dropdown-toggle"
                             >
@@ -204,7 +205,7 @@ const Header = () => {
                                 <span className="notification">4</span>
                             </button>
                             {
-                                isNotificationOpen && (
+                                activeMenu === 'notifications' && (
                                     <ul
                                         className="dropdown-menu notif-box animated fadeIn show"
                                         aria-labelledby="notifDropdown"
@@ -354,7 +355,7 @@ const Header = () => {
                         <li className="nav-item topbar-user dropdown hidden-caret">
                             <button
                                 onClick={() => {
-                                    isAuthenticated ? setIsUserMenuOpen(!isUserMenuOpen) : navigate('/login');
+                                    isAuthenticated ? toggleMenu("usermenu") : navigate('/login');
                                 }}
                                 className="dropdown-toggle profile-pic border-0 bg-white"
                             >
@@ -388,7 +389,7 @@ const Header = () => {
                                 }
                             </button>
                             {
-                                isUserMenuOpen && (
+                                activeMenu === 'usermenu' && (
                                     <ul className="dropdown-menu dropdown-user animated fadeIn show">
                                         <div className="dropdown-user-scroll scrollbar-outer">
                                             <li>

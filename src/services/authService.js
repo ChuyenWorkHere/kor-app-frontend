@@ -1,4 +1,5 @@
 import api from "../config/axiosConfig"
+
 const authService = {
     login: async (formData) => {
         const response = await api.post("/auth/login", formData);
