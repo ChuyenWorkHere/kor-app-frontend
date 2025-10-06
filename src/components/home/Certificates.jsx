@@ -1,17 +1,18 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Certificates = () => {
     return (
         <>
-            <div className="mb-2 d-flex align-items-center justify-content-between">
-                <h1 className="fw-bold fs-4 ms-5 ms-sm-0">
+            <div className="mb-1 d-flex align-items-center justify-content-between">
+                <h1 className="fw-bold fs-4 ms-sm-0">
                     Certificates
                 </h1>
             </div>
 
-            <div className="row h-100 m-2">
-                <div className="col-12 col-sm-6 p-1">
-                    <a href="/ielts" className='d-block'>
+            <div className="row mb-3">
+                <div className="col-12 col-sm-6">
+                    <Link to="/" className='d-block'>
                         <img
                             src="https://media.fluentez.com/uploads/uploads/KSSTcfbk5brmShiZRXh2Y.webp"
                             alt="Ielts"
@@ -23,11 +24,11 @@ const Certificates = () => {
                                 minWidth: "100%"
                             }}
                         />
-                    </a>
+                    </Link>
                 </div>
 
-                <div className="col-12 col-sm-6 p-1">
-                    <a href="/ielts" className='d-block'>
+                <div className="col-12 col-sm-6">
+                    <Link to="/" className='d-block'>
                         <img
                             src="https://media.fluentez.com/uploads/uploads/3jGc8bBtoRvOE-BAu32nk.webp"
                             alt="Ielts"
@@ -39,7 +40,7 @@ const Certificates = () => {
                                 minWidth: "100%"
                             }}
                         />
-                    </a>
+                    </Link>
                 </div>
             </div>
         </>

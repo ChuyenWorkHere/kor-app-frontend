@@ -41,7 +41,23 @@ const Register = () => {
   return (
     <div className="h-100 rounded bg-gradient shadow d-flex align-items-center justify-content-center">
       <div className='shadow p-5'>
-        <h2 className="mb-3 fw-bold text-dark">Create an Account</h2>
+        <h2 className="mb-4 fw-bold text-black fs-4">Welcome</h2>
+        <div className="mb-4 d-flex align-items-center justify-content-center gap-3">
+          <button className="d-flex align-items-center gap-2 rounded border border-secondary px-4 py-2 bg-white hover-shadow">
+            <img src="/assets/img/google.png" alt="Google Icon" style={{ width: "20px" }} />
+            <span className="fw-semibold text-black">Sign up with Google</span>
+          </button>
+
+          <button className="d-flex align-items-center gap-2 rounded border border-secondary px-4 py-2 bg-white hover-shadow">
+            <img src="/assets/img/facebook.png" alt="Facebook Icon" style={{ width: "20px" }} />
+            <span className="fw-semibold text-black">Sign up with Facebook</span>
+          </button>
+        </div>
+        <div className="mb-4 d-flex align-items-center justify-content-center gap-3">
+          <div className="flex-grow-1" style={{ height: "2px", background: "#e2e8f0" }}></div>
+          <span className="fw-medium text-secondary">or</span>
+          <div className="flex-grow-1" style={{ height: "2px", background: "#e2e8f0" }}></div>
+        </div>
         <form
           className="rounded"
         >
@@ -77,7 +93,7 @@ const Register = () => {
             <input
               type="password"
               value={password}
-              placeholder="••••••••"
+              placeholder="Enter your password"
               className="form-control bg-light"
               maxLength={100}
               required
@@ -90,7 +106,7 @@ const Register = () => {
             <input
               type="password"
               value={repeatPassword}
-              placeholder="••••••••"
+              placeholder="Repeat your password"
               className="form-control bg-light"
               maxLength={100}
               required
@@ -102,12 +118,7 @@ const Register = () => {
 
           <button
             type="button"
-            className="btn w-100 fw-semibold text-white my-3"
-            style={{
-              backgroundColor: "#3146deff",
-              color: "#a6a6a6",
-              cursor: "default",
-            }}
+            className="btn btn-primary w-100 fw-semibold my-2"
             onClick={handleSubmit}
           >
             Register
@@ -121,7 +132,6 @@ const Register = () => {
           </div>
         </form>
       </div>
-
     </div>
   )
 }

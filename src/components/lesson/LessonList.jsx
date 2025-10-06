@@ -1,9 +1,7 @@
 import React, { use, useEffect, useState } from 'react'
 import LessonCard from './LessonCard'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllLessonsInCourse } from '../../features/lessonSlice';
-import { BounceLoader } from 'react-spinners';
-import { useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 import { removeVietnameseTones } from '../../utils/stringUtils';
 
 const LessonList = () => {
@@ -24,8 +22,8 @@ const LessonList = () => {
     return (
         <>
             {loading ? (
-                <div className='w-100 h-vh-50 d-flex align-items-center justify-content-center'>
-                    <BounceLoader color="#0bc817" size={50} />
+                <div className='w-100 h-vh-50 d-flex align-items-center justify-content-center' style={{minHeight: "300px"}}>
+                    <CircularProgress size={50} />
                 </div>
             ) : error ? (
                 <p>Error loading lessons: {error}</p>

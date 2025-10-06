@@ -70,7 +70,7 @@ const Login = () => {
               type="password"
               name="password"
               onChange={handleInputChange}
-              placeholder="password"
+              placeholder="Enter your password"
               className="form-control bg-light"
               required
             />
@@ -83,13 +83,13 @@ const Login = () => {
           }
           
           <div className="mb-2">
-            <a href="/password/forgot" className="small fw-semibold text-primary">
+            <Link to="/" className="small fw-semibold text-primary">
               Forgot Password
-            </a>
+            </Link>
           </div>
 
           <button type="submit" className="btn btn-primary w-100 fw-semibold">
-            Login to your account
+            Login
           </button>
         </form>
 
@@ -104,7 +104,6 @@ const Login = () => {
           Trang chủ
         </Link>
       </div>
-
     </div>
   );
 }

@@ -33,7 +33,7 @@ const Header = () => {
     }, [dispatch, isAuthenticated, isPremium]);
 
     return (
-        <div className="main-header">
+        <div className="main-header bg-custome">
             <div className="main-header-logo">
 
                 <div className="logo-header" data-background-color="dark">
@@ -92,16 +92,16 @@ const Header = () => {
                         <li
                             className="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
                         >
-                            <a
+                            <Link
                                 className="nav-link dropdown-toggle"
                                 data-bs-toggle="dropdown"
-                                href="#"
+                                to="/"
                                 role="button"
                                 aria-expanded="false"
                                 aria-haspopup="true"
                             >
                                 <FaSearch size={16} />
-                            </a>
+                            </Link>
                             <ul className="dropdown-menu dropdown-search animated fadeIn">
                                 <form className="navbar-left navbar-form nav-search">
                                     <div className="input-group">
@@ -357,7 +357,7 @@ const Header = () => {
                                 onClick={() => {
                                     isAuthenticated ? toggleMenu("usermenu") : navigate('/login');
                                 }}
-                                className="dropdown-toggle profile-pic border-0 bg-white"
+                                className="dropdown-toggle profile-pic border-0 bg-transparent"
                             >
                                 <div className="avatar-sm">
                                     {

@@ -21,59 +21,32 @@
 }
 
 /* Animation Background Styles */
-/* Gradient background */
-.bg-gradient {
-  background: linear-gradient(to bottom right, #fce7f3, #ffffff, #eff6ff);
+.bg-custome {
+  background: #f7adf7;
+  background: radial-gradient(circle, rgba(247, 173, 247, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
-/* Simple text colors */
-.text-pink { color: #f9a8d4; }
-.bg-pink { background-color: #fbcfe8; }
-.bg-purple { background-color: #e9d5ff; }
-
-/* Animations */
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.6; }
+.no-bg,
+.no-bg .list-group-item {
+  background-color: transparent !important;
 }
-.animate-pulse { animation: pulse 2s infinite; }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.bg-sidebar-custome {
+  background: #EEAECA;
+  background: linear-gradient(0, rgba(238, 174, 202, 1) 47%, rgba(148, 187, 233, 1) 100%);
 }
-.animate-bounce { animation: bounce 1.5s infinite; }
-
-/* Delays */
-.delay-05s { animation-delay: 0.5s; }
-.delay-1s { animation-delay: 1s; }
-.delay-15s { animation-delay: 1.5s; }
-.delay-22s { animation-delay: 2.2s; }
 
 /* Dotted pattern */
 .dotted-pattern {
-  background-image: radial-gradient(circle at 2px 2px, rgba(236,72,153,0.1) 1px, transparent 0px);
+  background-image: radial-gradient(circle at 2px 2px, rgba(236, 72, 153, 0.1) 1px, transparent 0px);
   background-size: 20px 20px;
 }
 
 /* Radial glow */
 .radial-glow {
-  background: radial-gradient(100px at 522px 213px, rgba(236,72,153,0.05), transparent 80%);
+  background: radial-gradient(100px at 522px 213px, rgba(236, 72, 153, 0.05), transparent 80%);
 }
 
-.bg-gradient {
-  background: linear-gradient(to right, #5F2EEA, #8A6AFB);
-}
-
-/*Custome overflow*/
-@media (min-width: 992px) {
-  .overflow-lg-auto {
-    overflow: auto !important;
-  }
-  .max-h-lg-600 {
-    max-height: 600px !important;
-  }
-}
 
 .hover-shadow {
   transition: all 0.5s ease;
@@ -98,17 +71,18 @@
 .title-truncate {
   display: -webkit-box;
   -webkit-line-clamp: 1;
-  line-clamp: 1;            
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: normal; 
+  white-space: normal;
   min-height: 1.8em;
 }
+
 .desc-truncate {
   display: -webkit-box;
-  -webkit-line-clamp: 1; 
-  line-clamp: 1;    
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -147,4 +121,21 @@
 
 .bg-light-organge {
   background-color: #fef3c7 !important;
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 0px;
+  height: .5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3F5EFB;
+  background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+  border-radius: 3px;
 }

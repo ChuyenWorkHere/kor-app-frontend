@@ -48,7 +48,7 @@ const HeaderSection = () => {
 
   return (
     <div
-      className="position-relative overflow-hidden border-bottom"
+      className="position-relative overflow-hidden"
     >
       <div className="py-3 px-0 position-relative" style={{ zIndex: 10 }}>
         <div className="row align-items-center mb-3">
