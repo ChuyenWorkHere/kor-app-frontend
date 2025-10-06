@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const topUsersData = [
     {
@@ -88,7 +89,7 @@ const TopUser = () => {
     return (
         < >
             <div className="mb-2 d-flex align-items-center justify-content-between">
-                <h1 className="fw-bold fs-4 ms-4 mt-5 mt-sm-0 ms-sm-0">
+                <h1 className="fw-bold fs-4 mt-sm-0 ms-sm-0">
                     Top Users
                 </h1>
                 <a href="/top-users" className="text-decoration-none text-muted d-flex align-items-center gap-1">
@@ -97,10 +98,10 @@ const TopUser = () => {
                 </a>
             </div>
 
-            <div style={{ maxHeight: '400px', overflowX: 'hidden', scrollbarWidth: 'none' }}>
-                <ul className="list-group">
+            <div className='overflow-auto rounded border shadow' style={{ maxHeight: '400px'}}>
+                <ul className="list-group no-bg" style={{background: "transparent !important"}}>
                     {topUsersData.map(user => (
-                        <a
+                        <Link
                             key={user.id}
                             href={`/profile/${user.id}`}
                             className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
@@ -110,10 +111,9 @@ const TopUser = () => {
                                 <img
                                     src={user.avatar}
                                     alt={`${user.name} avatar`}
-                                    className="rounded-circle"
-                                    style={{ width: '2.7rem', height: '2.7rem', objectFit: 'cover' }}
+                                    className="rounded-circle object-fit-cover"
+                                    style={{ width: '2.7rem', height: '2.7rem'}}
                                     loading="lazy"
-                                    referrerPolicy="no-referrer"
                                 />
                                 <div className="text-truncate" style={{ maxWidth: '10rem' }}>
                                     <div className="fw-semibold text-truncate" title={user.name}>{user.name}</div>
@@ -125,7 +125,7 @@ const TopUser = () => {
                             <span className="badge bg-primary rounded-pill align-self-start" style={{ fontSize: '0.75rem' }}>
                                 level {user.level}
                             </span>
-                        </a>
+                        </Link>
                     ))}
                 </ul>
             </div>

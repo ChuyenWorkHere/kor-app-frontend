@@ -1,6 +1,6 @@
-import { useEffect} from 'react'
+import { useEffect } from 'react'
 import Home from './components/home/Home'
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LessonDetail from './components/lesson/LessonDetail'
 import Layout from './pages/Layout'
 import Login from './components/auth/Login'
@@ -17,6 +17,7 @@ import TagList from './components/common/TagList'
 import LessonList from './components/lesson/LessonList'
 import { Toaster } from 'react-hot-toast'
 import Pricing from './components/pricing/Pricing'
+import AnimatedBackground from './components/common/AnimatedBackground'
 
 
 function App() {
@@ -29,36 +30,37 @@ function App() {
 
   return (
     <div className={`wrapper ${isSidebarOpen ? 'nav_open' : ''} ${isHeaderOpen ? 'topbar_open' : ''}`}>
-        <Router>
-          <Routes>
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
+      <AnimatedBackground />
+      <Router>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
 
-              <Route element={<PrivateRoute />}>
+            <Route element={<PrivateRoute />}>
 
-                <Route path=":courseSlug" element={<CourseLayout />}>
-                  <Route index element={
-                    <>
-                      <HeaderSection />
-                      <TagList />
-                      <LessonList />
-                    </>
-                  } />
-                  <Route path=':lessonSlug' element={<LessonDetail />} />
-                  <Route path=":lessonSlug/theory/:theoryId" element={<BaseTheory />} />
-                  <Route path=":lessonSlug/exercise/:exerciseId" element={<BasePractice />} />
-                </Route>
-                <Route path='pricing' element={<Pricing />} />
-                <Route path='vocabulary' element={<Vocabulary />}>
+              <Route path=":courseSlug" element={<CourseLayout />}>
+                <Route index element={
+                  <>
+                    <HeaderSection />
+                    <TagList />
+                    <LessonList />
+                  </>
+                } />
+                <Route path=':lessonSlug' element={<LessonDetail />} />
+                <Route path=":lessonSlug/theory/:theoryId" element={<BaseTheory />} />
+                <Route path=":lessonSlug/exercise/:exerciseId" element={<BasePractice />} />
+              </Route>
+              <Route path='pricing' element={<Pricing />} />
+              <Route path='vocabulary' element={<Vocabulary />}>
 
-                </Route>
               </Route>
             </Route>
-          </Routes >
-        </Router >
-        <Toaster />
+          </Route>
+        </Routes >
+      </Router >
+      <Toaster />
     </div>
 
   )

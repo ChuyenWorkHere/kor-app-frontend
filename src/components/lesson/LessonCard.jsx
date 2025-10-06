@@ -71,7 +71,7 @@ const LessonCard = ({ lesson }) => {
                 <i className='far fa-clock me-2'></i>
                 <span>{lesson.requiredMinute}</span>
               </div>
-              <span className="fw-medium text-primary">{lesson?.contents?.length * lesson?.myProgress?.percentage / 100}/{lesson?.contents?.length || 0} bài học</span>
+              <span className="fw-medium text-primary">{Math.round(lesson?.contents?.length * lesson?.myProgress?.percentage / 100)}/{lesson?.contents?.length || 0} bài học</span>
             </div>
           </div>
         </div>
