@@ -2,7 +2,6 @@ import React, { use } from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import { IoIosWarning } from "react-icons/io";
 
 
 const Features = () => {
@@ -24,7 +23,7 @@ const Features = () => {
             ) : error ? (
                 <div className='d-flex align-items-center justify-content-center'>
                     <div className='d-flex align-items-center justify-content-center' style={{minHeight: "160px",}}>
-                        <p className='fs-5'> <IoIosWarning size={20} /> Lỗi khi lấy dữ liệu bài học</p>
+                        <p className='fs-5'> Lỗi khi lấy dữ liệu bài học</p>
                     </div>
                 </div>
                 

@@ -1,5 +1,4 @@
 import React from 'react'
-import Sidebar from '../common/Sidebar'
 import TopUser from './TopUser'
 import ProcessCard from './ProcessCard'
 import Banner from './Banner'

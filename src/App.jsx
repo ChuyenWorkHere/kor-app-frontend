@@ -18,11 +18,25 @@ import LessonList from './components/lesson/LessonList'
 import { Toaster } from 'react-hot-toast'
 import Pricing from './components/pricing/Pricing'
 import AnimatedBackground from './components/common/AnimatedBackground'
+import { useTimeTracker } from './hook/useTimeTracker'
+import { fetchUserInfo } from './features/userSlice'
 
 
 function App() {
   const { isSidebarOpen, isHeaderOpen } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
+
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const userInfo = useSelector(state => state.user.info);
+  const isPremium = userInfo?.premium;
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchUserInfo());
+    }
+  }, [dispatch, isAuthenticated, isPremium]);
+
+  useTimeTracker();
 
   useEffect(() => {
     dispatch(fetchCourses());

@@ -1,7 +1,8 @@
 import React from 'react'
-import { FaCheck, FaClock } from 'react-icons/fa'
+import CheckCircle from "../icons/CheckCircle"
+import ClockIcon from "../icons/ClockIcon"
 import { Link } from 'react-router-dom'
-import { AiFillExclamationCircle } from "react-icons/ai";
+import InfoIcon from '../icons/InfoIcon'
 
 const LessonCard = ({ lesson }) => {
 
@@ -33,11 +34,11 @@ const LessonCard = ({ lesson }) => {
               >
                 {
                   lesson.myProgress.status === "COMPLETED" ? (
-                    <FaCheck size={12} className='text-white' />
+                    <CheckCircle size={12} color='white' />
                   ) : lesson.myProgress.status === "IN_PROGRESS" ? (
-                    <FaClock size={12} className='text-white' />
+                    <ClockIcon size={12} color='white' />
                   ) : (
-                    <AiFillExclamationCircle size={12} className='text-white' />
+                    <InfoIcon size={12} color='white' />
                   )
                 }
               </div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Switch } from '@mui/material';
-import Congrat from '../common/Congrat'
+import Switch from '@mui/material/Switch';
 import { useUpdateProgress } from "../../hook/useUpdateProgress";
 import { useCooldown } from "../../hook/useCooldown";
 import toast from "react-hot-toast";

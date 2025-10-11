@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useUpdateProgress } from '../../hook/useUpdateProgress';
 import { updateProgress } from '../../features/lessonSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { syncProgressBackEnd } from '../../services/progressService';

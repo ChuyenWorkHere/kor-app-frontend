@@ -1,8 +1,7 @@
 import React from "react";
-import { FaCheck } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { FaRegPenToSquare } from "react-icons/fa6";
 import { capitalizeWords } from "../../utils/stringUtils";
+import FilePenIcon from "../icons/FilePenIcon";
+import CheckCirle from "../icons/CheckCircle";
 
 const ExerciseCard = ({ content }) => {
 
@@ -18,9 +17,9 @@ const ExerciseCard = ({ content }) => {
       d-flex align-items-center justify-content-center`} >
         {
           isCompleted ? (
-            <FaCheck size={15} color="white" />
+            <CheckCirle size={15} color="white" />
           ) : (
-            <FaRegPenToSquare size={15} color="black" />
+            <FilePenIcon size={15} color="black" />
           )
         }
         

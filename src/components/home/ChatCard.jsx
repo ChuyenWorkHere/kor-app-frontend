@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ChatCard = () => {
     return (
@@ -17,24 +18,6 @@ const ChatCard = () => {
                 />
             </div>
 
-            <div
-                className="position-absolute user-select-none"
-                style={{
-                    pointerEvents: "none",
-                    right: "-0.25rem",
-                    top: "-0.125rem",
-                    width: "8rem",
-                }}
-            >
-                <img
-                    src="/assets/img/lunar_lottie_gif_optimize.CycEOdz3.gif"
-                    loading="lazy"
-                    alt=""
-                    className="img-fluid w-100 h-100"
-                />
-            </div>
-
-
             <div className="user-select-none text-center d-flex flex-column justify-content-center align-items-center z-10" style={{ zIndex: 20 }}>
 
                 <h3 className="fw-semibold text-white">
@@ -50,18 +33,16 @@ const ChatCard = () => {
                 </div>
 
                 <div className="mx-auto mt-2" style={{ width: "5rem" }}>
-                    <a
-                        href="/speaking-options"
+                    <Link
+                        to="/"
                         className="d-flex align-items-center justify-content-center"
                         style={{
                             color: "#28B6BA",
                             textDecoration: "none",
                         }}
-                        onMouseEnter={(e) => (e.target.style.color = "#23D9A2")}
-                        onMouseLeave={(e) => (e.target.style.color = "#28B6BA")}
                     >
                         See now!
-                    </a>
+                    </Link>
                 </div>
             </div>
 

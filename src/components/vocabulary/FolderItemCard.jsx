@@ -1,6 +1,6 @@
+import { Settings } from 'lucide-react'
 import React from 'react'
 import { CiSettings } from 'react-icons/ci'
-import { FaGrinHearts } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 const FolderItemCard = () => {
@@ -37,7 +37,7 @@ const FolderItemCard = () => {
                                 onMouseEnter={(e) => (e.currentTarget.style.background = "#ccc")}
                                 onMouseLeave={(e) => (e.currentTarget.style.background = "#f8f9fa")}
                             >
-                                <CiSettings size={22} />
+                                <Settings size={22} />
                             </div>
                         </div>
                     </div>

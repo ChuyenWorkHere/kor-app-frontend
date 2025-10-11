@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { FaAngleRight, FaBell, FaEnvelope, FaHeart, FaLayerGroup, FaSearch } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../../features/authSlice'
 import { fetchUserInfo } from '../../features/userSlice'
 import { toggleHeader, toggleSidebar } from '../../features/uiSlice'
+import SearchIcon from '../icons/SearchIcon'
+import LayerIcon from '../icons/LayerIcon'
+import MailIcon from '../icons/MailIcon'
+import BellIcon from '../icons/BellIcon'
+import AngleRightIcon from '../icons/AngleRightIcon'
+import HeartIcon from '../icons/HeartIcon'
 
 const Header = () => {
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const userInfo = useSelector(state => state.user.info);
-    const isPremium = userInfo?.premium;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -26,11 +30,6 @@ const Header = () => {
         navigate('/login');
     }
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            dispatch(fetchUserInfo());
-        }
-    }, [dispatch, isAuthenticated, isPremium]);
 
     return (
         <div className="main-header bg-custome">
@@ -77,7 +76,7 @@ const Header = () => {
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <button type="submit" className="btn btn-search pe-1">
-                                    <FaSearch size={16} />
+                                    <SearchIcon size={16} />
                                 </button>
                             </div>
                             <input
@@ -100,7 +99,7 @@ const Header = () => {
                                 aria-expanded="false"
                                 aria-haspopup="true"
                             >
-                                <FaSearch size={16} />
+                                <SearchIcon size={18} />
                             </Link>
                             <ul className="dropdown-menu dropdown-search animated fadeIn">
                                 <form className="navbar-left navbar-form nav-search">
@@ -121,7 +120,7 @@ const Header = () => {
                                     isAuthenticated ? toggleMenu('messages') : navigate('/login');
                                 }}
                             >
-                                <FaEnvelope size={16} />
+                                <MailIcon size={18} />
                             </button>
                             {
                                 activeMenu === 'messages' && (
@@ -186,7 +185,7 @@ const Header = () => {
                                         </li>
                                         <li>
                                             <a className="see-all" href="javascript:void(0);"
-                                            >See all messages<FaAngleRight size={16} />
+                                            >See all messages<AngleRightIcon size={18} />
                                             </a>
                                         </li>
                                     </ul>
@@ -201,7 +200,7 @@ const Header = () => {
                                 }}
                                 className="nav-link dropdown-toggle"
                             >
-                                <FaBell size={16} />
+                                <BellIcon size={18} />
                                 <span className="notification">4</span>
                             </button>
                             {
@@ -254,7 +253,7 @@ const Header = () => {
                                                     </a>
                                                     <a href="#">
                                                         <div className="notif-icon notif-danger">
-                                                            <FaHeart size={16} />
+                                                            <HeartIcon size={18} />
                                                         </div>
                                                         <div className="notif-content">
                                                             <span className="block"> Farrah liked Admin </span>
@@ -266,91 +265,13 @@ const Header = () => {
                                         </li>
                                         <li>
                                             <a className="see-all" href="javascript:void(0);"
-                                            >See all notifications<FaAngleRight size={16} />
+                                            >See all notifications<AngleRightIcon size={16} />
                                             </a>
                                         </li>
                                     </ul>
                                 )
                             }
 
-                        </li>
-                        <li className="nav-item topbar-icon dropdown hidden-caret">
-                            <a
-                                className="nav-link"
-                                data-bs-toggle="dropdown"
-                                href="#"
-                                aria-expanded="false"
-                            >
-                                <FaLayerGroup size={16} />
-                            </a>
-                            <div className="dropdown-menu quick-actions animated fadeIn">
-                                <div className="quick-actions-header">
-                                    <span className="title mb-1">Quick Actions</span>
-                                    <span className="subtitle op-7">Shortcuts</span>
-                                </div>
-                                <div className="quick-actions-scroll scrollbar-outer">
-                                    <div className="quick-actions-items">
-                                        <div className="row m-0">
-                                            <a className="col-6 col-md-4 p-0" href="#">
-                                                <div className="quick-actions-item">
-                                                    <div className="avatar-item bg-danger rounded-circle">
-                                                        <i className="far fa-calendar-alt"></i>
-                                                    </div>
-                                                    <span className="text">Calendar</span>
-                                                </div>
-                                            </a>
-                                            <a className="col-6 col-md-4 p-0" href="#">
-                                                <div className="quick-actions-item">
-                                                    <div
-                                                        className="avatar-item bg-warning rounded-circle"
-                                                    >
-                                                        <i className="fas fa-map"></i>
-                                                    </div>
-                                                    <span className="text">Maps</span>
-                                                </div>
-                                            </a>
-                                            <a className="col-6 col-md-4 p-0" href="#">
-                                                <div className="quick-actions-item">
-                                                    <div className="avatar-item bg-info rounded-circle">
-                                                        <i className="fas fa-file-excel"></i>
-                                                    </div>
-                                                    <span className="text">Reports</span>
-                                                </div>
-                                            </a>
-                                            <a className="col-6 col-md-4 p-0" href="#">
-                                                <div className="quick-actions-item">
-                                                    <div
-                                                        className="avatar-item bg-success rounded-circle"
-                                                    >
-                                                        <i className="fas fa-envelope"></i>
-                                                    </div>
-                                                    <span className="text">Emails</span>
-                                                </div>
-                                            </a>
-                                            <a className="col-6 col-md-4 p-0" href="#">
-                                                <div className="quick-actions-item">
-                                                    <div
-                                                        className="avatar-item bg-primary rounded-circle"
-                                                    >
-                                                        <i className="fas fa-file-invoice-dollar"></i>
-                                                    </div>
-                                                    <span className="text">Invoice</span>
-                                                </div>
-                                            </a>
-                                            <a className="col-6 col-md-4 p-0" href="#">
-                                                <div className="quick-actions-item">
-                                                    <div
-                                                        className="avatar-item bg-secondary rounded-circle"
-                                                    >
-                                                        <i className="fas fa-credit-card"></i>
-                                                    </div>
-                                                    <span className="text">Payments</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </li>
                         <li className="nav-item topbar-user dropdown hidden-caret">
                             <button
@@ -379,8 +300,7 @@ const Header = () => {
                                 {
                                     isAuthenticated ? (
                                         <span className="profile-username">
-                                            <span className="op-7">Hi</span>
-                                            <span className="fw-bold">, {userInfo?.fullName}</span>
+                                            <span className="fw-medium">{userInfo?.fullName || "User"}</span>
                                         </span>) : (
                                         <span className="profile-username">
                                             <span className="op-7">Hi</span>

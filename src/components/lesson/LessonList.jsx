@@ -8,10 +8,7 @@ const LessonList = () => {
 
     const { lessons, loading, error } = useSelector(state => state.lesson);
 
-    const { levelId, status, keyword, tagId } = useSelector(state => state.search);
-
-    console.log(levelId, status, keyword, tagId);
-    
+    const { levelId, status, keyword, tagId } = useSelector(state => state.search);    
 
     const filteredLessons = lessons
         .filter(l => !levelId || l.level.levelId === levelId)

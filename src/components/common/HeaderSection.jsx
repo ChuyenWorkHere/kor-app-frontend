@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { FaArrowLeft, FaSearch } from "react-icons/fa";
+import SearchIcon from "../icons/SearchIcon"
 import api from "../../config/axiosConfig";
 import { useDispatch } from "react-redux";
 import { setSearchParams } from "../../features/searchSlice";
@@ -88,10 +87,11 @@ const HeaderSection = () => {
             {/* Search box */}
             <div className="w-100 w-sm-auto">
               <div className="position-relative">
-                <FaSearch
+                <div
                   className="position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"
-                  style={{ fontSize: "14px" }}
-                />
+                  >
+                    <SearchIcon size={14} />
+                </div>
                 <input
                   type="text"
                   placeholder="Tìm kiếm..."

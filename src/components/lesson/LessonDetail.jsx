@@ -3,8 +3,7 @@ import CompletionCard from '../common/CompletionCard'
 import LessonBanner from './LessonBanner'
 import ExerciseList from '../exercise/ExerciseList'
 import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from "react-hot-toast"
+import { useSelector } from 'react-redux';
 
 const LessonDetail = () => {
 

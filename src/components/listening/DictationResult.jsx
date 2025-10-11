@@ -1,7 +1,5 @@
+import { ArrowUp, ChevronFirst, ChevronLast, ChevronsLeft, Zap } from "lucide-react";
 import React from "react";
-import { BsFillLightningChargeFill, BsLightningCharge } from "react-icons/bs";
-import { HiMiniArrowTrendingUp } from "react-icons/hi2";
-import { IoArrowBack } from "react-icons/io5";
 import { Link, useParams } from "react-router-dom";
 
 export default function DictationResult({questions}) {
@@ -21,11 +19,11 @@ export default function DictationResult({questions}) {
             <div className="position-relative mb-2">
               <div className="rounded-circle d-flex align-items-center justify-content-center shadow-lg"
                    style={{ width: "96px", height: "96px", background: "linear-gradient(to right, #60a5fa, #6366f1)" }}>
-                <BsFillLightningChargeFill size={56} className='text-white' />
+                <Zap size={56} color="white" fill="white" stroke="white" />
               </div>
               <div className="position-absolute bg-white rounded-circle p-1 shadow"
                    style={{ bottom: "-8px", right: "-8px" }}>
-                <HiMiniArrowTrendingUp size={20} className='text-success' />
+                <ArrowUp size={20} className='text-success' />
               </div>
             </div>
             <div className="fs-4 fw-bold text-danger">Tiến bộ tốt!</div>
@@ -34,7 +32,7 @@ export default function DictationResult({questions}) {
           <p className="text-muted">Bạn đã hoàn thành bài tập dictation này. Dưới đây là kết quả của bạn.</p>
           <div className="d-flex justify-content-center align-items-center gap-2 small mb-4">
             <div className="px-3 py-1 bg-danger-subtle text-danger rounded-pill fw-medium d-flex align-items-center">
-              <BsLightningCharge />
+              <Zap strokeWidth={2} size={18} className="me-1" />
               Bạn đang làm rất tốt!
             </div>
             <div className="px-3 py-1 bg-success-subtle text-success rounded-pill fw-medium">+20 điểm</div>
@@ -92,7 +90,7 @@ export default function DictationResult({questions}) {
           <Link
             to={`/${courseSlug}/${lessonSlug}`}
             className="px-4 py-2 bg-light border rounded-3 text-muted fw-medium d-flex align-items-center text-decoration-none shadow-sm">
-            <IoArrowBack className="me-2" />
+            <ChevronsLeft className="me-2" />
             Quay lại danh sách
           </Link>
         </div>
