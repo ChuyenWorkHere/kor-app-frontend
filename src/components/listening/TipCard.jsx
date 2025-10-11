@@ -1,5 +1,5 @@
+import { Lightbulb } from "lucide-react";
 import React from "react";
-import { FaLightbulb } from "react-icons/fa";
 
 const TipCard = ({ onClose }) => {
   return (
@@ -8,7 +8,7 @@ const TipCard = ({ onClose }) => {
       style={{ overflow: "hidden" }}>
       {/* Header */}
       <div className="d-flex align-items-center bg-warning text-white p-3 opacity-75">
-        <FaLightbulb size={20} className="me-2" />
+        <Lightbulb size={20} className="me-2" />
         <h5 className="mb-0 fw-bold">Mẹo luyện tập</h5>
         <button
           className="btn-md btn-light ms-auto rounded-circle"

@@ -1,7 +1,15 @@
 import React, { use } from 'react'
-import { FaBars, FaBook, FaBookOpen, FaCertificate, FaDesktop, FaEllipsisH, FaFacebookMessenger, FaFile, FaHome, FaLayerGroup, FaQuoteRight } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom'
+import LayerIcon from '../icons/LayerIcon';
+import HomeIcon from '../icons/HomeIcon';
+import MessengerIcon from '../icons/MessengerIcon';
+import BookOpenIcon from '../icons/BookOpenIcon';
+import BookIcon from '../icons/BookIcon';
+import QuoteRightIcon from '../icons/QuoteRightIcon';
+import AwardIcon from '../icons/AwardIcon';
+import HeartIcon from '../icons/HeartIcon';
+import ElipsisIcon from '../icons/ElipsisIcon';
 
 const Sidebar = () => {
 
@@ -49,8 +57,8 @@ const Sidebar = () => {
                         <li className={isActive("/") ? "nav-item active" : "nav-item"}>
                             <Link
                                 to={"/"}                            >
-                                <FaHome size={20} className='me-3' />
-                                <p>Dashboard</p>
+                                <HomeIcon size={20}/>
+                                <p className='ms-3'>Dashboard</p>
                             </Link>
                         </li>
                         <li className="nav-section">
@@ -61,8 +69,8 @@ const Sidebar = () => {
                         </li>
                         <li className="nav-item">
                             <a data-bs-toggle="collapse" href="#base">
-                                <FaLayerGroup size={20} className='me-3' />
-                                <p>Courses</p>
+                                <LayerIcon size={20} />
+                                <p className='ms-3'>Courses</p>
                                 <span className="caret"></span>
                             </a>
                             <div className="collapse" id="base">
@@ -80,41 +88,41 @@ const Sidebar = () => {
                             </div>
                         </li>
                         <li className={isActive("/messenger") ? "nav-item active" : "nav-item"}>
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
-                                <FaFacebookMessenger size={20} className='me-3' />
-                                <p>Messenger</p>
-                            </a>
+                            <Link data-bs-toggle="collapse" href="#sidebarLayouts">
+                                <MessengerIcon size={20} />
+                                <p className='ms-3'>Messenger</p>
+                            </Link>
                         </li>
                         <li className={isActive("/vocabulary") ? "nav-item active" : "nav-item"}>
                             <Link to="/vocabulary">
-                                <FaBookOpen size={20} className='me-3' />
-                                <p>Vocabulary</p>
+                                <BookOpenIcon size={20} />
+                                <p className='ms-3'>Vocabulary</p>
                             </Link>
                         </li>
                         <li className={isActive("/books") ? "nav-item active" : "nav-item"}>
-                            <a data-bs-toggle="collapse" href="#tables">
-                                <FaBook size={20} className='me-3' />
-                                <p>Books</p>
-                            </a>
+                            <Link data-bs-toggle="collapse" href="#tables">
+                                <BookIcon size={20} />
+                                <p className='ms-3'>Books</p>
+                            </Link>
                         </li>
                         <li className={isActive("/word-usage") ? "nav-item active" : "nav-item"}>
-                            <a data-bs-toggle="collapse" href="#maps">
-                                <FaQuoteRight size={20} className='me-3' />
-                                <p>Word Usage</p>
-                            </a>
+                            <Link data-bs-toggle="collapse" href="#maps">
+                                <QuoteRightIcon size={20} />
+                                <p className='ms-3'>Word Usage</p>
+                            </Link>
                         </li>
 
                         <li className="nav-section">
                             <span className="sidebar-mini-icon">
-                                <FaEllipsisH size={20} className='me-3' />
+                                <ElipsisIcon size={20} />
                             </span>
                             <h4 className="text-section">Advanced</h4>
                         </li>
 
                         <li className={isActive("/certificates") ? "nav-item active" : "nav-item"}>
                             <a data-bs-toggle="collapse" href="#charts">
-                                <FaCertificate size={20} className='me-3' />
-                                <p>Certificates</p>
+                                <AwardIcon size={20}  />
+                                <p className='ms-3'>Certificates</p>
                                 <span className="caret"></span>
                             </a>
                             <div className="collapse" id="charts">
@@ -134,22 +142,22 @@ const Sidebar = () => {
                         </li>
                         <li className="nav-item">
                             <a href="widgets.html">
-                                <FaDesktop size={20} className='me-3' />
-                                <p>Widgets</p>
+                                <HeartIcon size={20} />
+                                <p className='ms-3'>Widgets</p>
                                 <span className="badge badge-success">4</span>
                             </a>
                         </li>
                         <li className="nav-item">
                             <a href="../../documentation/index.html">
-                                <FaFile size={20} className='me-3' />
-                                <p>Documentation</p>
+                                <HeartIcon size={20}  />
+                                <p className='ms-3'>Documentation</p>
                                 <span className="badge badge-secondary">1</span>
                             </a>
                         </li>
                         <li className="nav-item">
                             <a data-bs-toggle="collapse" href="#submenu">
-                                <FaBars size={20} className='me-3' />
-                                <p>Menu Levels</p>
+                                <HeartIcon size={20}  />
+                                <p className='ms-3'>Menu Levels</p>
                                 <span className="caret"></span>
                             </a>
                             <div className="collapse" id="submenu">

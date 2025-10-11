@@ -1,5 +1,5 @@
+import { Settings } from 'lucide-react';
 import React from 'react'
-import { CiSettings } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 
 const TermCard = () => {
@@ -11,7 +11,7 @@ const TermCard = () => {
           <div className="d-flex align-items-center justify-content-between gap-2">
             <h3 className="text-truncate mb-0 fs-5 fw-medium text-dark">House</h3>
             <div className="rounded-circle bg-light p-2">
-              <CiSettings size={23} />
+              <Settings size={23} />
             </div>
           </div>
 

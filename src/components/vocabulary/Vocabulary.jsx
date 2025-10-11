@@ -1,11 +1,8 @@
 import React from 'react'
 import ActionButton from './ActionButton'
-import { TiDocumentAdd } from "react-icons/ti";
-import { CgTranscript } from "react-icons/cg";
-import { HiOutlineDocumentSearch } from "react-icons/hi";
-import { IoBarChartSharp } from "react-icons/io5";
 import TermCard from './TermCard';
 import FolderItemCard from './FolderItemCard';
+import { Captions, ChartLine, CirclePlus, FileSearch } from 'lucide-react';
 
 const Vocabulary = () => {
     return (
@@ -27,10 +24,10 @@ const Vocabulary = () => {
                 <div className="tab-content mt-3 mb-3" id="line-tabContent">
                     <div className="tab-pane fade active show" id="line-home" role="tabpanel" aria-labelledby="line-home-tab">
                         <div className="my-4 d-flex flex-wrap align-items-center gap-2">
-                            <ActionButton icon={TiDocumentAdd} label="Tạo học phần" bgColor="#7d8ca3" />
-                            <ActionButton icon={CgTranscript} label="Phiên âm" bgColor="#fecaca" />
-                            <ActionButton icon={HiOutlineDocumentSearch} label="Trích xuất" bgColor="#dbc7fd" />
-                            <ActionButton icon={IoBarChartSharp} label="CEFR Level" bgColor="#d4ddee" />
+                            <ActionButton icon={CirclePlus} label="Tạo học phần" bgColor="#7d8ca3" />
+                            <ActionButton icon={Captions} label="Phiên âm" bgColor="#fecaca" />
+                            <ActionButton icon={FileSearch} label="Trích xuất" bgColor="#dbc7fd" />
+                            <ActionButton icon={ChartLine} label="CEFR Level" bgColor="#d4ddee" />
                         </div>
 
                         <div className='row gy-3 ms-auto'>
@@ -57,7 +54,7 @@ const Vocabulary = () => {
                     </div>
                     <div className="tab-pane fade" id="line-contact" role="tabpanel" aria-labelledby="line-contact-tab">
                         <div className="my-4 d-flex flex-wrap align-items-center gap-2">
-                            <ActionButton icon={TiDocumentAdd} label="Tạo thư mục" bgColor="#7d8ca3" />
+                            <ActionButton icon={CirclePlus} label="Tạo thư mục" bgColor="#7d8ca3" />
                         </div>
                         <div className='row gy-3 ms-auto'>
                             <FolderItemCard />

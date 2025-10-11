@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCheckCircle } from "react-icons/fa";
+import CheckCircle from "../icons/CheckCircle";
 
 const CompletionCard = () => {
   return (
@@ -11,7 +11,7 @@ const CompletionCard = () => {
             
             <div className="d-flex align-items-center gap-3">
               <div className="d-flex align-items-center justify-content-center rounded-circle bg-white bg-opacity-25 backdrop-blur p-3">
-                <FaCheckCircle className="text-white" size={28} />
+                <CheckCircle color="white" size={28} />
               </div>
               <div>
                 <h2 className="fs-3 fw-bold text-white mb-1">🎉 Chúc mừng!</h2>

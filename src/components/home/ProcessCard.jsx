@@ -1,6 +1,48 @@
-import React from 'react'
+import { ArrowRight } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import api from '../../config/axiosConfig'
+import toast from 'react-hot-toast'
+
+const UPDATE_MINUTE = 5 * 60 * 1000;
 
 const ProcessCard = () => {
+
+    const [dailyTime, setDailyTime] = useState(0);
+    const [monthlyTime, setMonthlyTime] = useState(0);
+
+    const updateDailyTime = async () => {
+        try {
+            const response = await api.get("/users/session/daily");
+            setDailyTime(response.data.data);
+        } catch (error) {
+            toast.error('Lỗi khi lấy thời gian học tập hàng ngày:', error);
+        }
+    };
+
+    const updateMonthlyTime = async () => {
+        try {
+            const response = await api.get("/users/session/monthly");
+            setMonthlyTime(response.data.data);
+        } catch (error) {
+            toast.error('Lỗi khi lấy thời gian học tập hàng tháng:', error);
+        }
+    };
+    useEffect(() => {
+
+        const update = () => {
+            updateDailyTime();
+            updateMonthlyTime();
+        };
+        update();
+        const intervalDaily = setInterval(update, UPDATE_MINUTE);
+        return () => {
+            clearInterval(intervalDaily);
+        }
+    }, []);
+
+
     return (
         <div
             className="position-relative h-100 w-100 flex-shrink-0 flex-grow-0 rounded-2 px-4 py-4 overflow-lg-visible"
@@ -18,30 +60,24 @@ const ProcessCard = () => {
                 <div>
                     <p className="mb-0 fs-6">Today</p>
                     <span className="fw-bold small" style={{ color: "#ffc107" }}>
-                        0 minutes
+                        {dailyTime || 0} minutes
                     </span>
                 </div>
                 <div>
                     <p className="mb-0 fs-6">This Month</p>
                     <span className="fw-bold small" style={{ color: "#ffc107" }}>
-                        0 minutes
+                        {Math.floor(monthlyTime / 60) || 0} hours {monthlyTime % 60 || 0} mins
                     </span>
                 </div>
             </div>
 
-            
+
             <div className="mt-4 d-flex align-items-center gap-2" style={{ cursor: "pointer" }}>
-                <p
-                    className="mb-0 fw-semibold fs-6 user-select-none"
-                    style={{
-                        transition: "color 0.3s",
-                    }}
-                    onMouseEnter={(e) => (e.target.style.color = "#ffc107")}
-                    onMouseLeave={(e) => (e.target.style.color = "white")}
+                <Link
+                    className="mb-0 fw-semibold fs-6 user-select-none text-white transition-all"
                 >
-                    View Details
-                    
-                </p>
+                    View Details <ArrowRight size={16} className='ms-1'></ArrowRight>
+                </Link>
                 <i className='fas fa-arrow-right'></i>
             </div>
 

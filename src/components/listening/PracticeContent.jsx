@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
-import { BsFillLightningChargeFill } from 'react-icons/bs'
-import { FaLightbulb, FaList } from 'react-icons/fa'
-import { FaCheck } from "react-icons/fa6";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import AudioPlayer from './AudioPlayer';
 import AccuracyResult from './AccuracyResult';
 import TipCard from './TipCard';
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ResultCard from './ResultCard';
 import ProgressBar from '../common/ProgressBar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +11,8 @@ import { updateProgress } from '../../features/lessonSlice';
 import { syncProgressBackEnd } from '../../services/progressService';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
-import { calculateContentProgress, calculateLessonProgress } from '../../utils/progressUtil';
+import { calculateContentProgress } from '../../utils/progressUtil';
+import { Check, ChevronLeft, ChevronRight, ChevronsRight, Lightbulb, List, Zap } from 'lucide-react';
 
 const PracticeContent = ({ currentQuestionIndex, setCurrentQuestionIndex, questionList }) => {
 
@@ -124,12 +120,12 @@ const PracticeContent = ({ currentQuestionIndex, setCurrentQuestionIndex, questi
           <div className="d-flex flex-column justify-content-between align-items-start mb-4">
             <div className='d-flex justify-content-between align-items-center mb-4 w-100'>
               <button className="btn btn-primary d-flex align-items-center gap-2 shadow">
-                <FaList />
+                <List size={18} />
                 <span>Danh sách bài tập</span>
               </button>
               <button className="btn bg-warning text-white d-flex align-items-center gap-2 shadow fw-medium"
                 onClick={() => setIsTrickShown(!isTrickShown)}>
-                <FaLightbulb />
+                <Lightbulb size={18} />
                 <span>{isTrickShown ? "Ẩn mẹo" : "Hiện mẹo"}</span>
               </button>
             </div>
@@ -156,12 +152,12 @@ const PracticeContent = ({ currentQuestionIndex, setCurrentQuestionIndex, questi
               <button className="btn btn-secondary d-flex align-items-center"
                 disabled={currentQuestionIndex === 0}
                 onClick={handlePrevQuestion}>
-                <IoIosArrowBack className="me-1" /> Câu trước
+                <ChevronLeft size={18} className="me-1" /> Câu trước
               </button>
               <button className="btn btn-outline-primary d-flex align-items-center"
                 disabled={currentQuestionIndex === questionList.length - 1}
                 onClick={handleNextQuestion}>
-                Câu tiếp <IoIosArrowForward className="ms-1" />
+                Câu tiếp <ChevronRight size={18} className="ms-1" />
               </button>
             </div>
 
@@ -185,7 +181,7 @@ const PracticeContent = ({ currentQuestionIndex, setCurrentQuestionIndex, questi
                 }}
               />
               <div className="form-text text-center mt-2 fs-6 mt-1 text-muted">
-                <BsFillLightningChargeFill className="text-warning me-1" />
+                <Zap size={15} className="text-warning me-1" />
                 Nhấn <strong>Enter</strong> để kiểm tra
               </div>
             </div>
@@ -197,13 +193,13 @@ const PracticeContent = ({ currentQuestionIndex, setCurrentQuestionIndex, questi
                 <button className="btn border-custom flex-grow-1 d-flex justify-content-center align-items-center fw-medium fs-5"
                   onClick={handleNextQuestion}
                 >
-                  <MdKeyboardDoubleArrowRight size={20} className='me-2' /> Bỏ qua
+                  <ChevronsRight size={20} className='me-2' /> Bỏ qua
                 </button>
                 <button className="btn btn-primary flex-grow-1 d-flex justify-content-center align-items-center py-3 fw-medium fs-5"
                   disabled={!userAnswer.trim()}
                   onClick={handleCheckAnswer}
                 >
-                  <FaCheck size={20} className='me-2' /> Kiểm tra
+                  <Check size={20} className='me-2' /> Kiểm tra
                 </button>
 
               </div>

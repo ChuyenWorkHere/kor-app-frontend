@@ -1,6 +1,5 @@
-import { FaArrowLeft, FaArrowRight, FaCheckCircle, FaInfoCircle } from "react-icons/fa";
 import ProgressBar from "../common/ProgressBar";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { ChevronLeft, ChevronRight, CircleCheck, Info } from "lucide-react";
 
 export default function ResultCard({ question, userAnswer, isCorrect, handleNextQuestion, handleGoBack }) {
 
@@ -14,7 +13,7 @@ export default function ResultCard({ question, userAnswer, isCorrect, handleNext
         isCorrect ? (
           <div className="d-flex flex-column align-items-center text-center">
             <div className="d-flex align-items-center justify-content-center rounded-circle bg-success opacity-10 mb-2" style={{ width: "64px", height: "64px" }}>
-              <FaCheckCircle className="text-white" size={40} />
+              <CircleCheck className="text-white" size={40} />
             </div>
 
             <div className="fs-5 fw-bold text-success mb-1">
@@ -36,7 +35,7 @@ export default function ResultCard({ question, userAnswer, isCorrect, handleNext
                   className="d-flex align-items-center justify-content-center rounded-circle bg-light me-3"
                   style={{ width: "40px", height: "40px" }}
                 >
-                  <FaInfoCircle size={20} className="text-secondary" />
+                  <Info size={20} className="text-secondary" />
                 </div>
                 <div>
                   <div className="fw-bold">Kết quả kiểm tra</div>
@@ -116,7 +115,7 @@ export default function ResultCard({ question, userAnswer, isCorrect, handleNext
         { !isCorrect && 
         <button className="btn btn-light flex-fill border d-flex align-items-center justify-content-center"
         onClick={handleGoBack}>
-          <FaArrowLeft className="me-2" /> Quay lại chỉnh sửa
+          <ChevronLeft size={16} className="me-1" /> Quay lại chỉnh sửa
         </button>}
         
         <button
@@ -125,7 +124,7 @@ export default function ResultCard({ question, userAnswer, isCorrect, handleNext
           disabled = {!isCorrect}
           onClick={handleNextQuestion}
         >
-          <MdKeyboardArrowRight size={22} /> Câu tiếp theo
+          <ChevronRight size={22} /> Câu tiếp theo
         </button>
       </div>
     </div>

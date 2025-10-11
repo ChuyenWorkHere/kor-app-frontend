@@ -1,6 +1,8 @@
 import React from "react";
-import { FaBookOpen, FaCheck, FaCheckCircle, FaInfoCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import CheckCircle from "../icons/CheckCircle";
+import BookOpenIcon from "../icons/BookOpenIcon";
+import InfoIcon from "../icons/InfoIcon";
+import { CircleCheck } from "lucide";
 
 const LessonBanner = ({currentLesson}) => {
 
@@ -14,14 +16,14 @@ const LessonBanner = ({currentLesson}) => {
           {/* Badges */}
           <div className="d-flex align-items-start justify-content-center mb-3 flex-wrap gap-2">
             <span className="badge m-0 rounded-pill bg-light text-primary shadow-sm d-flex align-items-center py-2 px-3 fs-6">
-              <FaCheckCircle size={16} className='me-1' /> {currentLesson?.level?.levelName || "Not Found"}
+              <i className="me-2"><CheckCircle size={16} color="#2e85f8ff"/></i>  {currentLesson?.level?.levelName || "Not Found"}
             </span>
             <span className="badge m-0 rounded-pill bg-primary text-white shadow-sm d-flex align-items-center py-2 px-3 fs-6">
-              <FaBookOpen size={16} className='me-1' /> {currentLesson?.contents.length || 0} bài học
+              <i className="me-2"><BookOpenIcon size={16} color="white"/></i>  {currentLesson?.contents.length || 0} bài học
             </span>
             {currentLesson?.myProgress?.status === "COMPLETED" && (
               <span className="badge m-0 rounded-pill bg-primary text-white shadow-sm d-flex align-items-center py-2 px-3 fs-6">
-                <FaCheckCircle size={16} className='me-1' /> Hoàn thành
+                <i className="me-2"><CheckCircle size={16} color="white"/></i> Hoàn thành
               </span>
             )}
           </div>
@@ -33,7 +35,7 @@ const LessonBanner = ({currentLesson}) => {
           <div className="mb-3">
             <div className="d-flex align-items-start gap-2">
               <div className="flex-shrink-0 d-flex align-items-center justify-content-center bg-light rounded-circle" style={{ width: "32px", height: "32px" }}>
-                <FaInfoCircle size={20} className='text-primary' />
+                <InfoIcon size={20} className='text-primary' />
               </div>
               <p className="mb-0 text-secondary">
                 {currentLesson?.lessonDesc || "Not Found"}

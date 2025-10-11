@@ -3,7 +3,7 @@ import React from 'react'
 const Banner = () => {
     return (
         <div className="h-100 w-100 position-relative">
-            <video src="assets/video/christmas_home.mp4" className="w-100 h-100 object-fit-cover position-absolute rounded-3" loop autoPlay muted playsInline></video>
+            <img src="assets/img/banner-bg.webp" className="w-100 h-100 object-fit-cover rounded-3" fetchPriority="high" alt='Banner Background'></img>
             <div className="position-absolute top-50 start-50 w-100 translate-middle px-2 text-center text-white">
                 <h1 className="mb-2 fw-bold text-white text-nowrap fs-2 
              fs-md-5 fs-lg-2 fs-xl-1">

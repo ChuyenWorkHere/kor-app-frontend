@@ -1,9 +1,7 @@
 import React, { use } from 'react'
-import { FaAngleRight, FaHome } from 'react-icons/fa';
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
-import { LiaAngleRightSolid } from "react-icons/lia";
-import { IoHome, IoHomeOutline } from "react-icons/io5";
+import { Link} from 'react-router-dom';
 import { useBreadCrumb } from '../../hook/useBreadCrumb';
+import { ChevronRight, HouseIcon } from 'lucide-react';
 
 const BreadCrumb = () => {
   
@@ -14,13 +12,13 @@ const BreadCrumb = () => {
       <ul className="breadcrumbs ms-0 ps-0 border-0 text-white d-flex">
         <li className="nav-home">
           <Link to="/">
-            <IoHome size={18} className='mb-1' color='white' />
+            <HouseIcon size={18} color='white' />
           </Link>
         </li>
         {breadcrumbs.map((crumb, index) => (
           <React.Fragment key={index}>
             <li className="separator">
-                <LiaAngleRightSolid size={16} />
+                <ChevronRight size={20} color='white'/>
             </li>
             <li className="nav-item d-flex align-items-end">
               <Link to={crumb.link} className='text-white' 

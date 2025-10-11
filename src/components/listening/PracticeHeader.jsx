@@ -1,12 +1,12 @@
+import { Zap } from 'lucide-react';
 import React from 'react'
-import { BsFillLightningChargeFill } from "react-icons/bs";
 
 const PracticeHeader = ({content}) => {
   return (
     <div className="d-flex align-items-center justify-content-start bg-light border rounded-lg p-3 mb-4 shadow-sm">
       {/* Icon */}
       <div className="bg-primary rounded-circle p-2 me-3 d-flex justify-content-center align-items-center">
-        <BsFillLightningChargeFill className='text-white' />
+        <Zap size={16} fill='white' className='text-white' />
       </div>
 
       {/* Content */}

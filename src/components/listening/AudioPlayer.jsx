@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FaLightbulb, FaPause, FaPlayCircle } from 'react-icons/fa'
 import Slider from "@mui/material/Slider";
+import { Lightbulb, Pause, PlayCircle } from 'lucide-react';
 
 const AudioPlayer = ({ src }) => {
 
@@ -106,7 +106,7 @@ const AudioPlayer = ({ src }) => {
                         <option value={2}>2</option>
                     </select>
                     <button className="btn btn-sm btn-primary d-flex align-items-center text-nowrap">
-                        <FaLightbulb size={16} color='yellow' className="me-1" /> Gợi ý
+                         <Lightbulb size={16} color='gold' fill='gold' stroke='gold' className="me-1" /> Gợi ý
                     </button>
                     <div className="small text-muted text-nowrap">
                         {formatTime(currentTime)} / {formatTime(duration)}
@@ -117,8 +117,8 @@ const AudioPlayer = ({ src }) => {
                         onClick={togglePlay}>
                         {
                             isPlaying
-                                ? <FaPause className='text-white' />
-                                : <FaPlayCircle className='text-white' />
+                                ? <Pause className='text-white'/>
+                                : <PlayCircle className='text-white' />
                         }
                     </button>
                 </div>

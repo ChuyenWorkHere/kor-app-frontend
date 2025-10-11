@@ -1,5 +1,3 @@
-import LinearProgress from "@mui/material/LinearProgress";
-import Slider from "@mui/material/Slider";
 import React from "react";
 
 export default function AccuracyResult({ question, userAnswer }) {

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import Congrat from '../common/Congrat'
-import { FaCheck } from "react-icons/fa6";
-import { IoMdClose } from "react-icons/io";
 import { useUpdateProgress } from '../../hook/useUpdateProgress';
 import { useCooldown } from '../../hook/useCooldown';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import CheckCircle from '../icons/CheckCircle';
+import CloseIcon from '../icons/CloseIcon';
 
 
 const GrammarPractice = ({ questions }) => {
@@ -29,8 +28,6 @@ const GrammarPractice = ({ questions }) => {
             [questionId]: value
         }));
     }
-
-
 
     const handleCheck = () => {
 
@@ -116,7 +113,7 @@ const GrammarPractice = ({ questions }) => {
                         <span className="fw-medium">{q.questionText}</span>
                         {
                             showResult &&
-                            (results[q.questionId] ? <FaCheck className='ms-2' size={20} color='green' /> : <IoMdClose className='ms-2' size={20} color='red' />)
+                            (results[q.questionId] ? <CheckCircle size={20} color='green' /> : <CloseIcon size={20} color='red' />)
                         }
 
                     </div>
