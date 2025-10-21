@@ -1,11 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Home from './components/home/Home'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LessonDetail from './components/lesson/LessonDetail'
 import Layout from './pages/Layout'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
-import Vocabulary from './components/vocabulary/Vocabulary'
 import PrivateRoute from './routes/PrivateRoute'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCourses } from './features/courseSlice'
@@ -20,21 +19,28 @@ import Pricing from './components/pricing/Pricing'
 import AnimatedBackground from './components/common/AnimatedBackground'
 import { useTimeTracker } from './hook/useTimeTracker'
 import { fetchUserInfo } from './features/userSlice'
+import VocabularyLayout from './components/vocabulary/VocabularyLayout'
+import VocabularyContent from './components/vocabulary/VocabularyContent'
+import DeckForm from './components/vocabulary/DeckForm'
+import { checkAuth } from './utils/authUtils'
+import { Folder } from 'lucide-react'
+import FolderForm from './components/vocabulary/FolderForm'
+import FolderDetail from './components/vocabulary/FolderDetail'
 
 
 function App() {
   const { isSidebarOpen, isHeaderOpen } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const isAuthenticated = checkAuth();
   const userInfo = useSelector(state => state.user.info);
-  const isPremium = userInfo?.premium;
-  
+  const auth = useSelector(state => state.auth);
+
   useEffect(() => {
-    if (isAuthenticated) {
+    if (auth?.username && isAuthenticated) {
       dispatch(fetchUserInfo());
     }
-  }, [dispatch, isAuthenticated, isPremium]);
+  }, [dispatch, isAuthenticated, userInfo?.premium, auth?.username]);
 
   useTimeTracker();
 
@@ -67,8 +73,13 @@ function App() {
                 <Route path=":lessonSlug/exercise/:exerciseId" element={<BasePractice />} />
               </Route>
               <Route path='pricing' element={<Pricing />} />
-              <Route path='vocabulary' element={<Vocabulary />}>
-
+              <Route path='vocabulary' element={<VocabularyLayout />}>
+                  <Route index element = { <VocabularyContent />} />
+                  <Route path='new' element={<DeckForm />} />
+                  <Route path=':deckId/edit' element={<DeckForm />} />
+                  <Route path='folder/new' element={<FolderForm />} />
+                  <Route path='folder/:folderId' element={<FolderDetail />} />
+                  <Route path='folder/:folderId/edit' element={<FolderForm />} />
               </Route>
             </Route>
           </Route>

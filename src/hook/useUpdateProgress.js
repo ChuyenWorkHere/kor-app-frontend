@@ -31,7 +31,6 @@ export const useUpdateProgress = (results, questions) => {
         }));
 
         if (percentage === 100) {
-
             //update content progress backend
             syncProgressBackEnd({
                 ...currentContent.myProgress,

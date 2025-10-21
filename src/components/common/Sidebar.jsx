@@ -25,7 +25,7 @@ const Sidebar = () => {
     const courses = useSelector((state) => state.courses.courses);
 
     return (
-        <div className="sidebar bg-sidebar-custome">
+        <div className="sidebar">
             <div className="sidebar-logo">
                 {/* <!-- Logo Header --> */}
                 <div className="logo-header" data-background-color="light">

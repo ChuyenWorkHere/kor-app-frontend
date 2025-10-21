@@ -6,6 +6,7 @@ import lessonSlice from "./lessonSlice";
 import questionSlice from "./questionSlice";
 import uiSlice from "./uiSlice";
 import searchSlice from "./searchSlice";
+import vocabularySlice from "./vocabularySlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     question: questionSlice.reducer,
     ui: uiSlice.reducer,
     search: searchSlice.reducer,
+    vocabulary: vocabularySlice.reducer,
   },
 });
 

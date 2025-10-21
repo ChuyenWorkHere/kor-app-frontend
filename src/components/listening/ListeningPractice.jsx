@@ -4,13 +4,10 @@ import PracticeContent from './PracticeContent'
 
 const ListeningPractice = ({questions}) => {
   
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const currentQuestion = questions[currentQuestionIndex];
-
   return (
     <>
-      <PracticeHeader content={currentQuestion?.content} />
-      <PracticeContent currentQuestionIndex={currentQuestionIndex} setCurrentQuestionIndex={setCurrentQuestionIndex} questionList={questions} />
+      <PracticeHeader content={questions[0]?.content} />
+      <PracticeContent questionList={questions} />
     </>
   )
 }

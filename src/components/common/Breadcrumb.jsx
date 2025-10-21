@@ -9,19 +9,19 @@ const BreadCrumb = () => {
   
   return (
     <div className="background-white mb-3">
-      <ul className="breadcrumbs ms-0 ps-0 border-0 text-white d-flex">
+      <ul className="breadcrumbs ms-0 ps-0 border-0 text-dark d-flex align-items-start">
         <li className="nav-home">
           <Link to="/">
-            <HouseIcon size={18} color='white' />
+            <HouseIcon size={18} color='black' className='mb-1' />
           </Link>
         </li>
         {breadcrumbs.map((crumb, index) => (
           <React.Fragment key={index}>
             <li className="separator">
-                <ChevronRight size={20} color='white'/>
+                <ChevronRight size={20} color='black'/>
             </li>
             <li className="nav-item d-flex align-items-end">
-              <Link to={crumb.link} className='text-white' 
+              <Link to={crumb.link} className='text-black' 
               style={{ fontSize: "15px"}}>{crumb.name}</Link>
             </li>
           </React.Fragment>
