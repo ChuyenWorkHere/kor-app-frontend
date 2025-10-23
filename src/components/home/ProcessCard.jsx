@@ -4,11 +4,13 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import api from '../../config/axiosConfig'
 import toast from 'react-hot-toast'
+import { checkAuth } from '../../utils/authUtils'
 
 const UPDATE_MINUTE = 5 * 60 * 1000;
 
 const ProcessCard = () => {
 
+    const isAuthenticated = checkAuth();
     const [dailyTime, setDailyTime] = useState(0);
     const [monthlyTime, setMonthlyTime] = useState(0);
 
@@ -30,6 +32,8 @@ const ProcessCard = () => {
         }
     };
     useEffect(() => {
+        if(!isAuthenticated)
+            return;
 
         const update = () => {
             updateDailyTime();

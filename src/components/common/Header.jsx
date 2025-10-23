@@ -10,11 +10,16 @@ import MailIcon from '../icons/MailIcon'
 import BellIcon from '../icons/BellIcon'
 import AngleRightIcon from '../icons/AngleRightIcon'
 import HeartIcon from '../icons/HeartIcon'
+import { checkAuth } from '../../utils/authUtils'
 
 const Header = () => {
 
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const userInfo = useSelector(state => state.user.info);
+    const [isAuthenticated, setIsAuthenticated] = useState(checkAuth());
+
+    useEffect(() => {
+        setIsAuthenticated(checkAuth());
+    }, [userInfo]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,7 +37,7 @@ const Header = () => {
 
 
     return (
-        <div className="main-header bg-custome">
+        <div className="main-header">
             <div className="main-header-logo">
 
                 <div className="logo-header" data-background-color="dark">

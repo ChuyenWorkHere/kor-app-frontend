@@ -1,73 +1,114 @@
-import React from 'react'
+import { CirclePlus, Inbox } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
 import ActionButton from './ActionButton'
-import TermCard from './TermCard';
-import FolderItemCard from './FolderItemCard';
-import { Captions, ChartLine, CirclePlus, FileSearch } from 'lucide-react';
+import DeckCard from './DeckCard'
+import FolderCard from './FolderCard'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchMyDecks, fetchMyFolders, fetchPublicDecks } from '../../features/vocabularySlice'
+import Empty from './Empty'
 
 const Vocabulary = () => {
-    return (
-        <div className="">
-            <div className="py-0">
-                <ul className="nav nav-tabs nav-line nav-color-secondary" id="line-tab" role="tablist">
-                    <li className="nav-item submenu" role="presentation">
-                        <a className="nav-link py-0 active" id="line-home-tab" data-bs-toggle="pill" href="#line-home" role="tab" aria-controls="pills-home" aria-selected="true" tabIndex="-1">Học phần của bạn</a>
-                    </li>
-                    <li className="nav-item submenu" role="presentation">
-                        <a className="nav-link py-0" id="line-profile-tab" data-bs-toggle="pill" href="#line-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Học phần public</a>
-                    </li>
-                    <li className="nav-item submenu" role="presentation">
-                        <a className="nav-link  py-0" id="line-contact-tab" data-bs-toggle="pill" href="#line-contact" role="tab" aria-controls="pills-contact" aria-selected="false" tabIndex="-1">Nhóm học phần</a>
-                    </li>
-                </ul>
 
+  const dispatch = useDispatch();
+  const { myDeck, publicDeck, myFolder} = useSelector(state => state.vocabulary);
+  const [tab, setTab] = useState("myCourse");
 
-                <div className="tab-content mt-3 mb-3" id="line-tabContent">
-                    <div className="tab-pane fade active show" id="line-home" role="tabpanel" aria-labelledby="line-home-tab">
-                        <div className="my-4 d-flex flex-wrap align-items-center gap-2">
-                            <ActionButton icon={CirclePlus} label="Tạo học phần" bgColor="#7d8ca3" />
-                            <ActionButton icon={Captions} label="Phiên âm" bgColor="#fecaca" />
-                            <ActionButton icon={FileSearch} label="Trích xuất" bgColor="#dbc7fd" />
-                            <ActionButton icon={ChartLine} label="CEFR Level" bgColor="#d4ddee" />
-                        </div>
+  useEffect(() => {
+    dispatch(fetchMyDecks());
+  }, []);
 
-                        <div className='row gy-3 ms-auto'>
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                        </div>
+  const handleChangeTab = (tabName) => {
+    setTab(tabName);
 
-                    </div>
-                    <div className="tab-pane fade" id="line-profile" role="tabpanel" aria-labelledby="line-profile-tab">
-                        <div className='row gy-3 ms-auto'>
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                            <TermCard />
-                        </div>
-                    </div>
-                    <div className="tab-pane fade" id="line-contact" role="tabpanel" aria-labelledby="line-contact-tab">
-                        <div className="my-4 d-flex flex-wrap align-items-center gap-2">
-                            <ActionButton icon={CirclePlus} label="Tạo thư mục" bgColor="#7d8ca3" />
-                        </div>
-                        <div className='row gy-3 ms-auto'>
-                            <FolderItemCard />
-                            <FolderItemCard />
-                            <FolderItemCard />
-                            <FolderItemCard />
-                            <FolderItemCard />
-                        </div>
-                    </div>
+    if (tabName === "publicCourse" && publicDeck) {
+      dispatch(fetchPublicDecks());
+    }
+
+    if (tabName === "myFolder") {
+      dispatch(fetchMyFolders());
+    }
+  }
+
+  return (
+    <>
+      <ul className="nav nav-tabs nav-line nav-color-secondary">
+        <li className="nav-item submenu">
+          <button
+            className={`nav-link py-0 ${tab === "myCourse" ? "active" : ""}`}
+            onClick={() => handleChangeTab("myCourse")}>Học phần của bạn</button>
+        </li>
+        <li className="nav-item submenu">
+          <button
+            className={`nav-link py-0 ${tab === "publicCourse" ? "active" : ""}`}
+            onClick={() => handleChangeTab("publicCourse")}
+          >Học phần public</button>
+        </li>
+        <li className="nav-item submenu">
+          <button
+            className={`nav-link py-0 ${tab === "myFolder" ? "active" : ""}`}
+            onClick={() => handleChangeTab("myFolder")}
+          >Nhóm học phần</button>
+        </li>
+      </ul>
+      <div className="tab-content my-3">
+        <div className="tab-pane fade active show">
+          {
+            (tab === "myCourse" || tab === "myFolder") && (
+              <ActionButton
+                icon={CirclePlus}
+                label={tab === "myCourse" ? "Tạo học phần" : (tab === "myFolder" ? "Tạo thư mục" : "")}
+                bgColor="#7d8ca3"
+                link={tab === "myCourse" ? "/vocabulary/new" : (tab === "myFolder" ? "/vocabulary/folder/new" : "")}
+              />
+            )
+          }
+
+          {
+            tab === "myCourse" && (
+              (myDeck.length === 0) ? (
+                <Empty />
+              ) : (
+                <div className='row gy-3 ms-auto my-2'>
+                  {
+                    myDeck.map(deck => (<DeckCard key={deck.id} deck={deck} mode={"myCourse"} />))
+                  }
                 </div>
-            </div>
+              )
+            )
+          }
+
+          {
+            tab === "publicCourse" && (
+              (publicDeck.length === 0) ? (
+                <Empty />
+              ) : (
+                <div className='row gy-3 ms-auto my-2'>
+                  {
+                    publicDeck.map(deck => (<DeckCard key={deck.id} deck={deck} mode={"publicCourse"} />))
+                  }
+                </div>
+              )
+            )
+          }
+
+          {
+            tab === "myFolder" && (
+              (myFolder.length === 0) ? (
+                <Empty />
+              ) : (
+                <div className='row gy-3 ms-auto my-2'>
+                  {
+                    myFolder.map(folder => (<FolderCard key={folder.id} folder={folder} />))
+                  }
+                </div>
+              )
+            )
+          }
         </div>
-    )
+      </div>
+    </>
+
+  )
 }
 
 export default Vocabulary

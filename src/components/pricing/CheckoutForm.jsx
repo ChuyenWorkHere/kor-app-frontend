@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import toast from 'react-hot-toast';
-import { BeatLoader } from 'react-spinners';
 import PaymentSuccessCard from './PaymentSuccessCard';
 import { useDispatch } from 'react-redux';
 import { activateSubscription } from '../../features/userSlice';
 import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const CheckoutForm = ({ clientSecret, plan }) => {
     const stripe = useStripe();
@@ -52,7 +52,7 @@ const CheckoutForm = ({ clientSecret, plan }) => {
                     type="submit"
                     disabled={!stripe || loading}
                 >
-                    {loading ? `${<BeatLoader />}` : ``} Thanh toán ${plan.price}
+                    {loading ? `${<CircularProgress size={16} />}` : ``} Thanh toán ${plan.price}
                 </button>
             </form>
         ) : (

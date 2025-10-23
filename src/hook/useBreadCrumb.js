@@ -1,5 +1,6 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 
 export const useBreadCrumb = () => {
   const { courseSlug, lessonSlug } = useParams();
@@ -10,6 +11,7 @@ export const useBreadCrumb = () => {
   const currentLesson = lessons?.find((l) => l.lessonSlug === lessonSlug);
 
   const crumbs = [];
+
   if (currentCourse) {
     crumbs.push({ name: currentCourse.courseName, link: `/${courseSlug}` });
   }

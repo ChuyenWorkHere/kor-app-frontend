@@ -1,7 +1,7 @@
 import ProgressBar from "../common/ProgressBar";
 import { ChevronLeft, ChevronRight, CircleCheck, Info } from "lucide-react";
 
-export default function ResultCard({ question, userAnswer, isCorrect, handleNextQuestion, handleGoBack }) {
+export default function ResultCard({ question, userAnswer, isCorrect, handleNextQuestion, handleGoBack, correctProgress }) {
 
   const correctAnswer = question?.answers?.find(ans => ans.correct)?.answerText || "";
   
@@ -45,10 +45,10 @@ export default function ResultCard({ question, userAnswer, isCorrect, handleNext
                 </div>
               </div>
               <div className="px-3 py-1 rounded bg-success bg-opacity-10 text-white fw-bold fs-5">
-                {question.progress.percentage}%
+                {correctProgress}%
               </div>
             </div>
-            <ProgressBar progress={question.progress.percentage} height={10} bgColor="#31ce36" />
+            <ProgressBar progress={correctProgress} height={10} bgColor="#31ce36" />
             {/* So sánh input & đáp án */}
             <div className="row g-3 my-3">
               <div className="col text-center">
@@ -122,6 +122,11 @@ export default function ResultCard({ question, userAnswer, isCorrect, handleNext
           className="btn rounded-3 flex-fill d-flex align-items-center justify-content-center text-white fw-bold"
           style={{backgroundColor: "#9333ea"}}
           disabled = {!isCorrect}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && isCorrect) {
+              handleNextQuestion();
+            }
+          }}
           onClick={handleNextQuestion}
         >
           <ChevronRight size={22} /> Câu tiếp theo

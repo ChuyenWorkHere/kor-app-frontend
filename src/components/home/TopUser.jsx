@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../../config/axiosConfig';
 import toast from 'react-hot-toast';
 import CircularProgress from '@mui/material/CircularProgress';
+import { checkAuth } from '../../utils/authUtils';
 
 const TopUser = () => {
 
@@ -10,7 +11,7 @@ const TopUser = () => {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
-        api.get("/users/session/ranking")
+        api.get("/public/session/ranking")
             .then((response) => {
                 setTopUsersData(response.data.data);
             })
@@ -59,7 +60,7 @@ const TopUser = () => {
                                     <div className="text-truncate" style={{ maxWidth: '10rem' }}>
                                         <div className="fw-semibold text-truncate" title={data.user.username}>{data.user.username}</div>
                                         <small className="text-muted">
-                                            Got <span className="fw-semibold">{ data.minutes % 60} hours</span> on this month
+                                            Got <span className="fw-semibold">{ Math.round(data.minutes / 60)} hours</span> on this month
                                         </small>
                                     </div>
                                 </div>

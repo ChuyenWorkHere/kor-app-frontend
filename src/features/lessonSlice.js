@@ -43,9 +43,7 @@ const lessonSlice = createSlice({
         const contentIndex = state.lessons[lessonIndex].contents?.findIndex(content => content.contentId === contentId);
         if (contentIndex !== -1) {
           const currentContent = state.lessons[lessonIndex].contents[contentIndex]
-          state.lessons[lessonIndex].contents[contentIndex].myProgress = { ...currentContent.myProgress, ...contentProgress };
-          console.log(state.lessons[lessonIndex].contents[contentIndex].myProgress);
-          
+          state.lessons[lessonIndex].contents[contentIndex].myProgress = { ...currentContent.myProgress, ...contentProgress };          
         }
         
         //Cập nhật lesson progress

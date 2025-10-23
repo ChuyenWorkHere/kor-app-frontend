@@ -2,28 +2,27 @@ import React from "react";
 import CheckCircle from "../icons/CheckCircle";
 import BookOpenIcon from "../icons/BookOpenIcon";
 import InfoIcon from "../icons/InfoIcon";
-import { CircleCheck } from "lucide";
 
-const LessonBanner = ({currentLesson}) => {
+const LessonBanner = ({ currentLesson }) => {
 
   const totalCompleted = currentLesson?.contents?.filter(c => c.myProgress.status === "COMPLETED").length;
 
   return (
     <div className="position-relative p-4 border rounded-4 mt-3" style={{ backgroundColor: "#f6f3ff" }}>
       {/* Header */}
-      <div className="d-flex flex-md-row gap-4 gap-md-0 flex-column justify-content-between align-items-center">
+      <div className="d-flex flex-md-row gap-4 gap-md-0 flex-column justify-content-between align-items-center flex-1">
         <div className="pe-3 min-w-0">
           {/* Badges */}
-          <div className="d-flex align-items-start justify-content-center mb-3 flex-wrap gap-2">
+          <div className="d-flex align-items-start justify-content-center justify-content-md-start mb-3 flex-wrap gap-2">
             <span className="badge m-0 rounded-pill bg-light text-primary shadow-sm d-flex align-items-center py-2 px-3 fs-6">
-              <i className="me-2"><CheckCircle size={16} color="#2e85f8ff"/></i>  {currentLesson?.level?.levelName || "Not Found"}
+              <i className="me-2"><CheckCircle size={16} color="#2e85f8ff" /></i>  {currentLesson?.level?.levelName || "Not Found"}
             </span>
             <span className="badge m-0 rounded-pill bg-primary text-white shadow-sm d-flex align-items-center py-2 px-3 fs-6">
-              <i className="me-2"><BookOpenIcon size={16} color="white"/></i>  {currentLesson?.contents.length || 0} bài học
+              <i className="me-2"><BookOpenIcon size={16} color="white" /></i>  {currentLesson?.contents.length || 0} bài học
             </span>
             {currentLesson?.myProgress?.status === "COMPLETED" && (
               <span className="badge m-0 rounded-pill bg-primary text-white shadow-sm d-flex align-items-center py-2 px-3 fs-6">
-                <i className="me-2"><CheckCircle size={16} color="white"/></i> Hoàn thành
+                <i className="me-2"><CheckCircle size={16} color="white" /></i> Hoàn thành
               </span>
             )}
           </div>
@@ -51,13 +50,12 @@ const LessonBanner = ({currentLesson}) => {
 
           </div>
         </div>
-
-        <div className="d-flex flex-column justify-content-center align-items-center">
+        <div className="d-flex flex-column justify-content-center align-items-center flex-shrink-0 mt-4 mt-md-0">
           {/* Progress */}
           <div className="text-center px-3">
             <div className="small fw-medium mb-2 text-primary">Tiến độ học tập</div>
             <div className="fw-bold fs-2 text-primary">{currentLesson?.myProgress?.percentage || 0}%</div>
-            <div className="progress" style={{ height: "8px"}}>
+            <div className="progress" style={{ height: "8px" }}>
               <div className="progress-bar bg-blue" style={{ width: `${currentLesson?.myProgress?.percentage || 0}%` }}></div>
             </div>
             <span className="small fw-medium text-primary">{totalCompleted}/{currentLesson?.contents?.length || 0} bài tập</span>
@@ -82,7 +80,6 @@ const LessonBanner = ({currentLesson}) => {
             </a>
           </div> */}
         </div>
-
       </div>
     </div>
   );
