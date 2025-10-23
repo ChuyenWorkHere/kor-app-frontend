@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import TermCard from './TermCard';
+import DeckCard from '../vocabulary/DeckCard';
 
 const FolderDetail = () => {
 
@@ -42,7 +42,7 @@ const FolderDetail = () => {
             <div className="row g-3 p-3">
                 {decks.map((deck) => {
                     return (
-                        <TermCard
+                        <DeckCard
                             key={deck.id}
                             deck={deck}
                         />

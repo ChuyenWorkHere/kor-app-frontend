@@ -20,12 +20,12 @@ import AnimatedBackground from './components/common/AnimatedBackground'
 import { useTimeTracker } from './hook/useTimeTracker'
 import { fetchUserInfo } from './features/userSlice'
 import VocabularyLayout from './components/vocabulary/VocabularyLayout'
-import VocabularyContent from './components/vocabulary/VocabularyContent'
+import Vocabulary from './components/vocabulary/Vocabulary'
 import DeckForm from './components/vocabulary/DeckForm'
 import { checkAuth } from './utils/authUtils'
-import { Folder } from 'lucide-react'
 import FolderForm from './components/vocabulary/FolderForm'
 import FolderDetail from './components/vocabulary/FolderDetail'
+import VocabularyContent from './components/vocabulary/VocabularyContent'
 
 
 function App() {
@@ -74,8 +74,9 @@ function App() {
               </Route>
               <Route path='pricing' element={<Pricing />} />
               <Route path='vocabulary' element={<VocabularyLayout />}>
-                  <Route index element = { <VocabularyContent />} />
+                  <Route index element={<Vocabulary />} />
                   <Route path='new' element={<DeckForm />} />
+                  <Route path=':deckId' element={<VocabularyContent />} />
                   <Route path=':deckId/edit' element={<DeckForm />} />
                   <Route path='folder/new' element={<FolderForm />} />
                   <Route path='folder/:folderId' element={<FolderDetail />} />

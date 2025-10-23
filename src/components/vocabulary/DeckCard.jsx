@@ -2,7 +2,7 @@ import { Settings } from 'lucide-react';
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const TermCard = ({ deck, mode, toggleCheck = null, checked = false }) => {
+const DeckCard = ({ deck, mode, toggleCheck = null, checked = false }) => {
   return (
     <div className="col-lg-3 col-sm-6 ps-0 pe-2">
       <div className="position-relative border rounded p-3 bg-light shadow-sm">
@@ -61,4 +61,4 @@ const TermCard = ({ deck, mode, toggleCheck = null, checked = false }) => {
   );
 };
 
-export default TermCard
+export default DeckCard

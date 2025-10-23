@@ -3,8 +3,6 @@ import { useBreadCrumb } from '../../hook/useBreadCrumb';
 import { Outlet } from 'react-router-dom';
 
 const VocabularyLayout = () => {
-
-    useBreadCrumb({ tab: "Vocabulary", tabLink: "/vocabulary" });
     
     return (
         <div className="">

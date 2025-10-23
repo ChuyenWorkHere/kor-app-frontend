@@ -7,13 +7,11 @@ import { createDeck, updateDeck } from "../../features/vocabularySlice";
 import api from "../../config/axiosConfig";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useBreadCrumb } from "../../hook/useBreadCrumb";
 
 export default function DeckForm() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    useBreadCrumb();
     const { deckId } = useParams();
     const [currentDeck, setCurrentDeck] = useState(null);
     const [isPublic, setIsPublic] = useState(false);

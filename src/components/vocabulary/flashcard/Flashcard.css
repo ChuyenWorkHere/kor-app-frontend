@@ -1,0 +1,57 @@
+.flashcard-container {
+  perspective: 1000px;
+  width: 384px;
+  aspect-ratio: 4 / 6;
+  max-width: 90vw;
+}
+
+.flashcard-flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.flashcard-flipper.is-flipped {
+  transform: rotateX(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+.card-back {
+  transform: rotateX(180deg);
+}
+
+/* --- HIỆU ỨNG CHUYỂN THẺ MỚI --- */
+.flashcard-wrapper {
+  position: relative; /* Quan trọng để các thẻ con định vị tương đối */
+  width: 384px; /* Đảm bảo kích thước khớp với .flashcard-container */
+  aspect-ratio: 4 / 6;
+  max-width: 90vw;
+  
+  /* Thêm transition cho opacity và transform */
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.flashcard-wrapper.is-transitioning {
+  opacity: 25%;
+  transform: translateY(-50px);
+  /* Hoặc translateX(20px) nếu muốn trượt ngang */
+}
+
+.flashcard-wrapper .flashcard-flipper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
