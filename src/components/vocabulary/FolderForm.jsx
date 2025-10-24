@@ -187,7 +187,7 @@ const FolderForm = () => {
                 <div className="row g-3 p-3">
                     {myDeck.map((deck) => {
                         return (
-                            <TermCard
+                            <DeckCard
                                 key={deck.id}
                                 deck={deck}
                                 toggleCheck={toggleCheck}
