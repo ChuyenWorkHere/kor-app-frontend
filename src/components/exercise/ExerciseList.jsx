@@ -20,7 +20,7 @@ const ExerciseList = () => {
                     <h1 className="fs-4 fw-bold mb-3 text-md-start text-center">Lý Thuyết</h1>
                     {theoryContents.map((theory) => (
                         <div key={theory.contentId} className='col-12 col-sm-6 col-md-4'>
-                            <Link className='text-decoration-none' to={`/${courseSlug}/${lessonSlug}/theory/${theory.contentId}`}>
+                            <Link className='text-decoration-none' to={`/courses/${courseSlug}/${lessonSlug}/theory/${theory.contentId}`}>
                                 <ExerciseCard content={theory} />
                             </Link>
                         </div>
@@ -35,7 +35,7 @@ const ExerciseList = () => {
                     <h1 className="fs-4 fw-bold mb-3 text-md-start text-center">Bài tập</h1>
                     {exerciseContents.map((exercise) => (
                         <div key={exercise.contentId} className='col-12 col-sm-6 col-md-4'>
-                            <Link className='text-decoration-none' to={`/${courseSlug}/${lessonSlug}/exercise/${exercise.contentId}`}>
+                            <Link className='text-decoration-none' to={`/courses/${courseSlug}/${lessonSlug}/exercise/${exercise.contentId}`}>
                                 <ExerciseCard content={exercise} />
                             </Link>
                         </div>

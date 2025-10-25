@@ -61,7 +61,6 @@ const Deal = () => {
                                 <div>
                                     <h4 className='text-warning'>Premium Member</h4>
                                 </div>
-                                <img src="/assets/img/premium.gif" alt="King" style={{ width: 70, height: 70 }} />
                             </div>
                         )
                     )

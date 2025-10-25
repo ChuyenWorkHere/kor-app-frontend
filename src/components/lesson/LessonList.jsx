@@ -26,7 +26,7 @@ const LessonList = () => {
                 <p>Error loading lessons: {error}</p>
             ) : (
                 filteredLessons.length === 0 ? (
-                    <div className='d-flex flex-column align-items-center justify-content-center' style={{minWidth: "100%", backgroundColor: "#f3f0ff", height: "300px"}}>
+                    <div className='d-flex flex-column align-items-center justify-content-center' style={{minWidth: "100%", height: "300px"}}>
                         <img style={{width: "25%"}} src="/assets/img/undraw_upgrade_06a0.svg" alt="" />
                         <h2 className='text-center'>Oops! Hiện chưa có bài học phù hợp</h2>
                     </div>

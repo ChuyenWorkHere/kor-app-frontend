@@ -1,6 +1,6 @@
 import React, { use, useEffect, useState } from 'react'
 import ModeSelector from '../vocabulary/flashcard/ModeSelector';
-import FlashcardComponent from '../vocabulary/flashcard/FlashcardComponent';
+import Flashcard from './flashcard/Flashcard';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import api from '../../config/axiosConfig';
@@ -29,7 +29,7 @@ const VocabularyContent = () => {
     return (
         <>
             <ModeSelector modes={modes} selected={selected} setSelected={setSelected} />
-            <FlashcardComponent deckData={deckData} />
+            <Flashcard deckData={deckData} />
         </>
 
     )

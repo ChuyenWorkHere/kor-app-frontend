@@ -1,12 +1,21 @@
 import { ChevronsLeft, CirclePlus, RefreshCcwDot, Trash2 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { createDeck, updateDeck } from "../../features/vocabularySlice";
-import api from "../../config/axiosConfig";
+import { createDeck, updateDeck } from "../../../features/vocabularySlice";
+import api from "../../../config/axiosConfig";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { parseExcelFile } from "../../../utils/fileUtils";
+
+
+const FORM_CONFIG = {
+    MAX_NAME_LENGTH: 100,
+    MAX_DESC_LENGTH: 500,
+    MIN_CARDS: 1,
+    DEFAULT_CARD: { id: null, word: '', definition: '' },
+};
 
 export default function DeckForm() {
 
@@ -17,7 +26,7 @@ export default function DeckForm() {
     const [isPublic, setIsPublic] = useState(false);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [cards, setCards] = useState([{ id: null, word: "", definition: "" }]);
+    const [cards, setCards] = useState([FORM_CONFIG.DEFAULT_CARD]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -25,14 +34,8 @@ export default function DeckForm() {
             return;
         setLoading(true);
         api.get(`/users/decks/${deckId}`)
-            .then(response => {
-                console.log(response.data.data);
-                setCurrentDeck(response.data.data);
-            })
-            .catch(error => {
-                console.log(error);
-                toast.error(error.response?.data || "Lỗi khi lấy dữ liệu từ vựng");
-            })
+            .then(response => { setCurrentDeck(response.data.data) })
+            .catch(error => { toast.error(error.response?.data || "Lỗi khi lấy dữ liệu từ vựng") })
             .finally(() => setLoading(false));
     }, [deckId]);
 
@@ -41,17 +44,17 @@ export default function DeckForm() {
             setIsPublic(!currentDeck.hide);
             setName(currentDeck.name);
             setDescription(currentDeck.description);
-            setCards(currentDeck.flashcards || [{ id: null, word: "", definition: "" }]);
+            setCards(currentDeck.flashcards || [FORM_CONFIG.DEFAULT_CARD]);
         }
     }, [currentDeck]);
 
 
     const handleAddCard = () => {
-        setCards([...cards, { id: null, word: "", definition: "" }]);
+        setCards([...cards, FORM_CONFIG.DEFAULT_CARD]);
     };
 
     const handleRemoveCard = (index) => {
-        if (cards.length === 1) {
+        if (cards.length === FORM_CONFIG.MIN_CARDS) {
             toast.error("Bộ thẻ cần chứa ít nhất 1 từ vựng");
             return;
         }
@@ -65,45 +68,29 @@ export default function DeckForm() {
         setCards(updated);
     };
 
-    const handleCreate = async () => {
-        try {
-            setLoading(true);
-            await dispatch(createDeck({
-                name,
-                description,
-                hide: !isPublic,
-                flashcards: cards
-            })).unwrap();
+    const handleSubmit = useCallback(async () => {
+        if (!name || !description || !cards.some(card => card.word && card.definition)) {
+            toast.error('Vui lòng điền đầy đủ thông tin');
+            return;
+        }
 
-            toast.success("Tạo bộ từ vựng thành công!");
-            navigate("/vocabulary");
+        setLoading(true);
+        try {
+            const deckData = { name, description, hide: !isPublic, flashcards: cards };
+            if (deckId) {
+                await dispatch(updateDeck({ id: deckId, ...deckData })).unwrap();
+                toast.success('Cập nhật bộ từ vựng thành công!');
+            } else {
+                await dispatch(createDeck(deckData)).unwrap();
+                toast.success('Tạo bộ từ vựng thành công!');
+            }
+            navigate('/vocabulary');
         } catch (error) {
-            toast.error(error.message || "Có lỗi xảy ra khi tạo bộ từ vựng!");
+            toast.error(error.message || `Lỗi khi ${deckId ? 'cập nhật' : 'tạo'} bộ từ vựng`);
         } finally {
             setLoading(false);
         }
-    };
-
-    const handleUpdate = async () => {
-        try {
-            setLoading(true);
-            
-            await dispatch(updateDeck({
-                id: deckId,
-                name,
-                description,
-                hide: !isPublic,
-                flashcards: cards
-            })).unwrap();
-
-            toast.success("Cập nhật bộ từ vựng thành công!");
-            navigate("/vocabulary");
-        } catch (error) {
-            toast.error(error.message || "Có lỗi xảy ra khi cập nhật bộ từ vựng!");
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [name, description, isPublic, cards, deckId, dispatch, navigate]);
 
     const handleDelete = async () => {
         try {
@@ -117,6 +104,31 @@ export default function DeckForm() {
             setLoading(false);
         }
     };
+
+    const handleExcelUpload = useCallback(async (event) => {
+        const file = event.target.files[0];
+        if (!file || !file.name.endsWith('.xlsx')) {
+            toast.error('Vui lòng chọn file .xlsx');
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const newCards = await parseExcelFile(file);
+            if (newCards.length === 0) {
+                toast.error('File Excel không chứa từ vựng hợp lệ');
+                return;
+            }
+            setCards(newCards);
+            toast.success(`Đã thêm ${newCards.length} từ vựng từ file Excel`);
+        } catch (error) {
+            toast.error('Lỗi đọc file Excel');
+            console.error(error);
+        } finally {
+            setLoading(false);
+            event.target.value = '';
+        }
+    }, [cards]);
 
     return (
         <form className="container my-4 border rounded bg-light shadow-sm p-3">
@@ -191,7 +203,7 @@ export default function DeckForm() {
                                 <button
                                     type="button"
                                     className="btn btn-secondary"
-                                    onClick={handleUpdate}
+                                    onClick={handleSubmit}
                                 >
                                     <RefreshCcwDot size={18} /> Cập Nhật
                                 </button>
@@ -200,13 +212,12 @@ export default function DeckForm() {
                             <button
                                 type="button"
                                 className="btn btn-primary"
-                                onClick={handleCreate}
+                                onClick={handleSubmit}
                             >
                                 <CirclePlus size={18} /> Tạo
                             </button>
                         )
                     }
-
                 </div>
             </div>
 
@@ -215,11 +226,16 @@ export default function DeckForm() {
                 {/* Khu vực thẻ */}
                 <div className="card bg-white p-3">
                     <div className="d-flex flex-wrap gap-2 mb-3">
-
-                        <button type="button" className="btn btn-success d-flex align-items-center">
+                        <label className="btn btn-success d-flex align-items-center text-white">
                             <CirclePlus className="me-2" size={18} />
                             <span>Excel</span>
-                        </button>
+                            <input
+                                type="file"
+                                accept=".xlsx"
+                                onChange={handleExcelUpload}
+                                style={{ display: 'none' }}
+                            />
+                        </label>
                     </div>
 
                     <ul className="list-unstyled">

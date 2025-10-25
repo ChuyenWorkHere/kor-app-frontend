@@ -4,10 +4,9 @@ import { ChevronsLeft, CirclePlus, RefreshCcwDot, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import DeckCard from "./DeckCard";
-import { createFolder, fetchMyDecks, updateFolder } from "../../features/vocabularySlice";
+import { createFolder, fetchMyDecks, updateFolder } from "../../../features/vocabularySlice";
 import toast from "react-hot-toast";
-import api from "../../config/axiosConfig";
+import api from "../../../config/axiosConfig";
 
 const FolderForm = () => {
 

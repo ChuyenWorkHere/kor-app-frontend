@@ -19,7 +19,7 @@ const createTTSUrl = (text) => {
     return `${TTS_CONFIG.PROXY}?quest=${encodeURIComponent(gttsUrl)}`;
 };
 
-function FlashcardComponent({ deckData }) {
+function Flashcard({ deckData }) {
 
     const [isFlipped, setIsFlipped] = useState(false);
     const [transitioning, setTransitioning] = useState(false);
@@ -152,7 +152,6 @@ function FlashcardComponent({ deckData }) {
             </div>
 
 
-            {/* Controls */}
             <div className="d-flex justify-content-between align-items-center w-100" style={{ maxWidth: "384px" }}>
                 <button
                     type="button"
@@ -174,4 +173,4 @@ function FlashcardComponent({ deckData }) {
     );
 }
 
-export default FlashcardComponent;
+export default Flashcard;
