@@ -88,7 +88,7 @@ export default function DictationResult({questions}) {
         {/* Footer */}
         <div className="d-flex justify-content-center gap-3 mt-4">
           <Link
-            to={`/${courseSlug}/${lessonSlug}`}
+            to={`/courses/${courseSlug}/${lessonSlug}`}
             className="px-4 py-2 bg-light border rounded-3 text-muted fw-medium d-flex align-items-center text-decoration-none shadow-sm">
             <ChevronsLeft className="me-2" />
             Quay lại danh sách

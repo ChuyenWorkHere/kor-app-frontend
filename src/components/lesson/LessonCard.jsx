@@ -9,7 +9,7 @@ const LessonCard = ({ lesson }) => {
   return (
     <div className='col-lg-4 col-sm-6'>
       <Link
-        to={`/${lesson.course.courseSlug}/${lesson.lessonSlug}`}
+        to={`/courses/${lesson.course.courseSlug}/${lesson.lessonSlug}`}
         className="text-decoration-none"
       >
         <div className="d-flex bg-white rounded-4 overflow-hidden shadow-sm hover-shadow p-0 card-lesson gap-2">

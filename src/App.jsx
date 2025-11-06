@@ -21,11 +21,12 @@ import { useTimeTracker } from './hook/useTimeTracker'
 import { fetchUserInfo } from './features/userSlice'
 import VocabularyLayout from './components/vocabulary/VocabularyLayout'
 import Vocabulary from './components/vocabulary/Vocabulary'
-import DeckForm from './components/vocabulary/DeckForm'
+import DeckForm from './components/vocabulary/deck/DeckForm'
 import { checkAuth } from './utils/authUtils'
-import FolderForm from './components/vocabulary/FolderForm'
-import FolderDetail from './components/vocabulary/FolderDetail'
+import FolderForm from './components/vocabulary/folder/FolderForm'
+import FolderDetail from './components/vocabulary/folder/FolderDetail'
 import VocabularyContent from './components/vocabulary/VocabularyContent'
+import NotFound from './components/common/NotFound'
 
 
 function App() {
@@ -60,7 +61,7 @@ function App() {
 
             <Route element={<PrivateRoute />}>
 
-              <Route path=":courseSlug" element={<CourseLayout />}>
+              <Route path="courses/:courseSlug" element={<CourseLayout />}>
                 <Route index element={
                   <>
                     <HeaderSection />
@@ -83,6 +84,7 @@ function App() {
                   <Route path='folder/:folderId/edit' element={<FolderForm />} />
               </Route>
             </Route>
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes >
       </Router >

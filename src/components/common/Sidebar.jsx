@@ -78,7 +78,7 @@ const Sidebar = () => {
                                     {
                                         courses.map(course => (
                                             <li key={course.courseId} className={isActive(`/${course.courseSlug}`) ? "active" : ""}>
-                                                <Link to={`/${course.courseSlug}`}>
+                                                <Link to={`/courses/${course.courseSlug}`}>
                                                     <span className="sub-item">{course.courseName}</span>
                                                 </Link>
                                             </li>
@@ -87,7 +87,7 @@ const Sidebar = () => {
                                 </ul>
                             </div>
                         </li>
-                        <li className={isActive("/messenger") ? "nav-item active" : "nav-item"}>
+                        <li className={`nav-item ${isActive("/messenger") ? "active" : ""} `}>
                             <Link data-bs-toggle="collapse" href="#sidebarLayouts">
                                 <MessengerIcon size={20} />
                                 <p className='ms-3'>Messenger</p>
