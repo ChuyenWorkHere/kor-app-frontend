@@ -16,7 +16,7 @@ export const fetchMyDecks = createAsyncThunk(
     'vocabulary/myDecks',
     async (_, thunkAPI) => {
         try {
-            const response = await api.get("/users/me/decks");
+            const response = await api.get("/users/me/decks/all");
             return response.data.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data);
